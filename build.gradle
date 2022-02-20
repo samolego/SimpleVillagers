@@ -13,6 +13,10 @@ group = project.maven_group
 repositories {
 	maven { url 'https://maven.nucleoid.xyz' }
 	maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+	maven {
+		name = "ParchmentMC"
+		url = "https://maven.parchmentmc.net/"
+	}
 }
 
 dependencies {
