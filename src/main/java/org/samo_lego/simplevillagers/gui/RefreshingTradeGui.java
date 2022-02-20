@@ -56,9 +56,8 @@ public class RefreshingTradeGui extends MerchantGui {
 
     @Override
     public void onSelectTrade(MerchantOffer offer) {
-        this.merchant.overrideOffers(new MerchantOffers());
+        this.merchant.overrideOffers(new MerchantOffers());  // Clear offers so that method that calls this doesn't override our items
         this.openDefaultTradeMenu();
-        //this.villager.(offer);
 
         AbstractContainerMenu abstractContainerMenu = this.player.containerMenu;
         if (abstractContainerMenu instanceof MerchantMenu merchantMenu) {

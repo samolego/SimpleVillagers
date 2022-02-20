@@ -26,10 +26,20 @@ public interface VillagerUtil {
                 villager.dropLeash(true, true);
             }
 
+
+
             final ItemStack stack = new ItemStack(VILLAGER_ITEM);
             final CompoundTag villagerTag = new CompoundTag();
 
-            if (pl.getInventory().add(stack)) {
+            boolean added = false;
+            if (pl.getMainHandItem().isEmpty()) {
+                pl.setItemInHand(InteractionHand.MAIN_HAND, stack);
+                added = true;
+            } else if (pl.getInventory().add(stack)) {
+                added = true;
+            }
+
+            if (added) {
                 // Remove the villager
                 ((AVillager) villager).callReleaseAllPois();
 
