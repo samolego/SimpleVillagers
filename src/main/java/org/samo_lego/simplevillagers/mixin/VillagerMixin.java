@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import org.samo_lego.simplevillagers.gui.RefreshingTradeGui;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,15 +18,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Villager.class)
 public abstract class VillagerMixin extends AbstractVillager implements VillagerUtil {
 
-    private boolean force;
+    @Unique
+    private boolean force = false;
 
     public VillagerMixin(EntityType<? extends AbstractVillager> entityType, Level level) {
         super(entityType, level);
     }
 
     @Override
-    public void forceDefaultTradingScreen() {
-        this.force = true;
+    public void forceDefaultTradingScreen(boolean force) {
+        this.force = force;
     }
 
     @Inject(method = "startTrading",

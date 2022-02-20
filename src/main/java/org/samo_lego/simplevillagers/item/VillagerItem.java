@@ -6,6 +6,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -36,24 +39,26 @@ public class VillagerItem extends SimplePolymerItem {
         super(settings, Items.VILLAGER_SPAWN_EGG);
     }
 
-    /*@Override
-    public InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player user, @NotNull InteractionHand hand) {
-        final ItemStack item = user.getItemInHand(hand);
-        System.out.println("VillagerItem.use " + item);
-        if (!world.isClientSide()) {
-            final Villager villager = new Villager(EntityType.VILLAGER, world);
+    @Override
+    public Component getName(@NotNull ItemStack stack) {
+        final CompoundTag tag = stack.getTag();
 
-            villager.load(item.getOrCreateTagElement("SimpleVillagers"));
-            world.addFreshEntity(villager);
+        if (tag != null) {
+            if (tag.contains("CustomName")) {
+                final String customName = tag.getString("CustomName");
+                return Component.Serializer.fromJson(customName);
+            } else if (tag.contains("VillagerData")) {
+                final ResourceLocation id = new ResourceLocation(tag.getCompound("VillagerData").getString("profession"));
 
-            return InteractionResultHolder.consume(item);
+                return new TextComponent(id.getPath());
+            }
         }
-        return InteractionResultHolder.pass(item);
-    }*/
+
+        return super.getName(stack);
+    }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        System.out.println("VillagerItem.useOnCTX");
         final Level level = context.getLevel();
 
         if (!(level instanceof ServerLevel world)) {
@@ -69,7 +74,6 @@ public class VillagerItem extends SimplePolymerItem {
 
         final Entity villager = EntityType.VILLAGER.spawn(world, handStack, context.getPlayer(), blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(clickedPos, blockPos2) && direction == Direction.UP);
 
-        System.out.println("Entity:; " + villager);
         if (villager != null) {
             this.loadVillager(villager, handStack);
             handStack.shrink(1);
@@ -81,7 +85,6 @@ public class VillagerItem extends SimplePolymerItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
-        System.out.println("VillagerItem.useLNG");
         final ItemStack handStack = player.getItemInHand(usedHand);
         final BlockHitResult hitResult = SpawnEggItem.getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
 
@@ -117,11 +120,9 @@ public class VillagerItem extends SimplePolymerItem {
     }
 
     private void loadVillager(Entity villager, ItemStack handStack) {
-        System.out.println("VillagerItem.loadVillager " + handStack);
         final CompoundTag tag = handStack.getOrCreateTag();
         tag.put("Pos", this.newDoubleList(villager.getX(), villager.getY(), villager.getZ()));
 
-        System.out.println(handStack.hashCode() + " Tag: " + tag);
         villager.load(tag);
     }
 

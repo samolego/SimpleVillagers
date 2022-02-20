@@ -69,13 +69,19 @@ public class RefreshingTradeGui extends MerchantGui {
 
     public void openDefaultTradeMenu() {
         this.close();
-        ((VillagerUtil) this.villager).forceDefaultTradingScreen();
+        ((VillagerUtil) this.villager).forceDefaultTradingScreen(true);
         ((AVillager) this.villager).callStartTrading(this.player);
     }
 
     @Override
     public boolean onTrade(MerchantOffer offer) {
-        return true;
+        return false;
+    }
+
+    @Override
+    public void onClose() {
+        this.villager.setTradingPlayer(null);
+        ((VillagerUtil) this.villager).forceDefaultTradingScreen(false);
     }
 
     static {

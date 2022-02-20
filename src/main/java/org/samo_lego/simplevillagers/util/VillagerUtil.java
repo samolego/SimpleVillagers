@@ -17,16 +17,14 @@ import org.samo_lego.simplevillagers.mixin.AVillager;
 import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
 
 public interface VillagerUtil {
-    void forceDefaultTradingScreen();
+    void forceDefaultTradingScreen(boolean force);
 
     static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
         if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && Permissions.check(pl, "simplevillagers.pickup.perform", true)) {
-            // Get the item
+            // Get the villager item
             if (villager.isLeashed()) {
                 villager.dropLeash(true, true);
             }
-
-
 
             final ItemStack stack = new ItemStack(VILLAGER_ITEM);
             final CompoundTag villagerTag = new CompoundTag();
@@ -44,6 +42,14 @@ public interface VillagerUtil {
                 ((AVillager) villager).callReleaseAllPois();
 
                 villager.saveWithoutId(villagerTag);
+                final CompoundTag brain = villagerTag.getCompound("Brain");
+                if (!brain.isEmpty()) {
+                    final CompoundTag memories = brain.getCompound("memories");
+
+                    if (!memories.isEmpty()) {
+                        memories.remove("minecraft:job_site");
+                    }
+                }
 
                 villagerTag.remove("Pos");
                 villagerTag.remove("Motion");
@@ -52,8 +58,6 @@ public interface VillagerUtil {
                 villagerTag.remove("Dimension");
 
                 stack.setTag(villagerTag);
-
-                System.out.println(stack.hashCode() + " " + stack.getTag());
 
                 villager.discard();
             }
