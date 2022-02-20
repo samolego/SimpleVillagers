@@ -1,29 +1,30 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "simplevillagers",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Simple Villagers",
+  "description": "Frustrated by villagers? So was I. A simple villager-management mod. Serverside, of course.",
   "authors": [
-    "Me!"
+    "samo_lego"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/samolego/SimpleVillagers",
+    "sources": "https://github.com/samolego/SimpleVillagers",
+    "issues": "https://github.com/samolego/SimpleVillagers"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MIT",
+  "icon": "assets/simplevillagers/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "org.samo_lego.simplevillagers.SimpleVillagers"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "simplevillagers.mixins.json"
   ],
 
   "depends": {
@@ -31,8 +32,5 @@
     "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
