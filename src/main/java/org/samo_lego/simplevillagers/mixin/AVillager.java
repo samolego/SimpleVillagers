@@ -12,4 +12,7 @@ public interface AVillager {
 
     @Invoker("updateTrades")
     void callUpdateTrades();
+
+    @Invoker("releaseAllPois")
+    void callReleaseAllPois();
 }

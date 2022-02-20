@@ -24,7 +24,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Villager
     }
 
     @Override
-    public void forceDefaultTradingScreen(ServerPlayer player) {
+    public void forceDefaultTradingScreen() {
         this.force = true;
     }
 

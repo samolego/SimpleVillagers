@@ -7,9 +7,12 @@ import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.trading.MerchantOffers;
 import org.samo_lego.simplevillagers.mixin.AVillager;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
 
@@ -31,7 +34,6 @@ public class RefreshingTradeGui extends MerchantGui {
         this.merchant.overrideOffers(this.villager.getOffers());
         this.setExperience(0);
         this.setTitle(this.villager.getDisplayName());
-        System.out.println("Merchant offers: " + this.merchant.getOffers());
 
         GuiElementInterface refreshBtn = new GuiElement(TERACOTTA, this::rerollTrades);
         this.setSlot(0, refreshBtn);
@@ -54,18 +56,27 @@ public class RefreshingTradeGui extends MerchantGui {
 
     @Override
     public void onSelectTrade(MerchantOffer offer) {
+        this.merchant.overrideOffers(new MerchantOffers());
         this.openDefaultTradeMenu();
+        //this.villager.(offer);
+
+        AbstractContainerMenu abstractContainerMenu = this.player.containerMenu;
+        if (abstractContainerMenu instanceof MerchantMenu merchantMenu) {
+            int i = this.villager.getOffers().indexOf(offer);
+            merchantMenu.setSelectionHint(i);
+            merchantMenu.tryMoveItems(i);
+        }
     }
 
     public void openDefaultTradeMenu() {
         this.close();
-        ((VillagerUtil) this.villager).forceDefaultTradingScreen(this.player);
+        ((VillagerUtil) this.villager).forceDefaultTradingScreen();
         ((AVillager) this.villager).callStartTrading(this.player);
     }
 
     @Override
     public boolean onTrade(MerchantOffer offer) {
-        return false;
+        return true;
     }
 
     static {
