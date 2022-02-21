@@ -1,6 +1,10 @@
+import com.modrinth.minotaur.TaskModrinthUpload
+
 plugins {
 	id 'fabric-loom' version '0.11-SNAPSHOT'
 	id 'maven-publish'
+	id 'com.matthewprenger.cursegradle' version '1.4.0'
+	id "com.modrinth.minotaur" version "1.1.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -78,4 +82,49 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+
+def ENV = System.getenv();
+curseforge {
+	if (ENV.CURSEFORGE_API_KEY) {
+		apiKey = ENV.CURSEFORGE_API_KEY
+	}
+
+	project {
+		id = "582149"
+		changelog = ENV.CHANGELOG ?: "A changelog can be found at https://github.com/samolego/SimpleVillagers/releases/tag/${version}"
+		releaseType = "release"
+		addGameVersion "${project.minecraft_version}"
+		addGameVersion "Fabric"
+
+		mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")) {
+			displayName = "[${project.minecraft_version}] SimpleVillagers ${version}"
+		}
+
+		afterEvaluate {
+			uploadTask.dependsOn("remapJar")
+		}
+	}
+
+	options {
+		forgeGradleIntegration = false
+	}
+}
+
+task modrinth(type: TaskModrinthUpload, dependsOn: remapJar) {
+	onlyIf {
+		ENV.MODRINTH_TOKEN
+	}
+
+	token = ENV.MODRINTH_TOKEN
+	projectId = "uRSeGBg3"
+	versionNumber = project.minecraft_version + "+" + version
+	changelog = ENV.CHANGELOG ?: "A changelog can be found at https://github.com/samolego/Taterzens/releases/tag/${version}"
+	versionName = "[${project.minecraft_version}] SimpleVillagers ${version}]"
+	releaseType = "release"
+
+	uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
+
+	addGameVersion("${project.minecraft_version}")
+	addLoader('fabric')
 }
