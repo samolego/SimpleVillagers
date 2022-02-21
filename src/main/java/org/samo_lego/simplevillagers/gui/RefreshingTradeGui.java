@@ -52,6 +52,7 @@ public class RefreshingTradeGui extends MerchantGui {
         this.setTitle(this.villager.getDisplayName());
 
         this.rerollStack = TERACOTTA.copy();
+        this.updateLore();
         GuiElementInterface refreshBtn = new GuiElement(rerollStack, this::rerollTrades);
         this.setSlot(0, refreshBtn);
 
@@ -69,7 +70,13 @@ public class RefreshingTradeGui extends MerchantGui {
         ((AVillager) this.villager).callUpdateTrades();
 
         this.merchant.overrideOffers(newTrades);
+        this.updateLore();
 
+        this.sendUpdate();
+    }
+
+    private void updateLore() {
+        final MerchantOffers newTrades = this.villager.getOffers();
         // Update lore
         final CompoundTag nbtDisplay = this.rerollStack.getOrCreateTag().getCompound(ItemStack.TAG_DISPLAY);
         final ListTag nbtLore = new ListTag();
@@ -104,7 +111,7 @@ public class RefreshingTradeGui extends MerchantGui {
                             .append(resName)
                             .withStyle(ChatFormatting.GOLD)
                             .withStyle(ChatFormatting.BOLD))
-                        .withStyle(Style.EMPTY.withItalic(false));
+                    .withStyle(Style.EMPTY.withItalic(false));
             nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(loreText)));
 
             // Easier enchant finding
@@ -145,8 +152,6 @@ public class RefreshingTradeGui extends MerchantGui {
 
         nbtDisplay.put(ItemStack.TAG_LORE, nbtLore);
         this.rerollStack.getTag().put(ItemStack.TAG_DISPLAY, nbtDisplay);
-
-        this.sendUpdate();
     }
 
     @Override
