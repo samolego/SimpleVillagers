@@ -20,7 +20,7 @@ public interface VillagerUtil {
     void forceDefaultTradingScreen(boolean force);
 
     static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-        if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && Permissions.check(pl, "simplevillagers.pickup.perform", true)) {
+        if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && Permissions.check(pl, "simplevillagers.villager_item.pickup", true)) {
             // Get the villager item
             if (villager.isLeashed()) {
                 villager.dropLeash(true, true);

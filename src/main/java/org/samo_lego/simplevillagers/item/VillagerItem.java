@@ -1,6 +1,7 @@
 package org.samo_lego.simplevillagers.item;
 
 import eu.pb4.polymer.api.item.SimplePolymerItem;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -65,6 +66,11 @@ public class VillagerItem extends SimplePolymerItem {
             return InteractionResult.SUCCESS;
         }
 
+        final Player player = context.getPlayer();
+        if (player != null && !Permissions.check(player, "simplevillagers.villager_item.use", true)) {
+            return InteractionResult.FAIL;
+        }
+
         final ItemStack handStack = context.getItemInHand();
         final BlockPos clickedPos = context.getClickedPos();
         final Direction direction = context.getClickedFace();
@@ -72,12 +78,12 @@ public class VillagerItem extends SimplePolymerItem {
 
         final BlockPos blockPos2 = blockState.getCollisionShape(level, clickedPos).isEmpty() ? clickedPos : clickedPos.relative(direction);
 
-        final Entity villager = EntityType.VILLAGER.spawn(world, handStack, context.getPlayer(), blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(clickedPos, blockPos2) && direction == Direction.UP);
+        final Entity villager = EntityType.VILLAGER.spawn(world, handStack, player, blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(clickedPos, blockPos2) && direction == Direction.UP);
 
         if (villager != null) {
             this.loadVillager(villager, handStack);
             handStack.shrink(1);
-            level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, clickedPos);
+            level.gameEvent(player, GameEvent.ENTITY_PLACE, clickedPos);
         }
 
         return InteractionResult.CONSUME;
@@ -90,6 +96,10 @@ public class VillagerItem extends SimplePolymerItem {
 
         if (!(level instanceof ServerLevel)) {
             return InteractionResultHolder.success(handStack);
+        }
+
+        if (!Permissions.check(player, "simplevillagers.villager_item.spawn", true)) {
+            return InteractionResultHolder.fail(handStack);
         }
 
         final BlockPos blockPos = hitResult.getBlockPos();
