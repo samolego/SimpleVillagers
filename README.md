@@ -19,4 +19,5 @@ Don't worry, even though you get a villager item that looks like spawn egg, it a
 
 ## Why so big jar file?
 SimpleVillagers wouldn't have been possible without the help of the following libraries:
-* SGUI
+* [SGUI](https://github.com/Patbox/sgui)
+* [Polymer](https://github.com/Patbox/polymer)
