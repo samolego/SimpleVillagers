@@ -34,7 +34,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
+
 public class VillagerItem extends SimplePolymerItem {
+
+    public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "villager_item");
 
     public VillagerItem(Properties settings) {
         super(settings, Items.VILLAGER_SPAWN_EGG);
