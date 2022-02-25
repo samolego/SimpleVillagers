@@ -35,7 +35,7 @@ public class SimpleVillagers implements ModInitializer {
 		UseEntityCallback.EVENT.register(VillagerUtil::onUseEntity);
 		Registry.register(Registry.ITEM, VillagerItem.ID, VILLAGER_ITEM);
 
-		Registry.register(Registry.ITEM, IronFarmBlock.ID, new PolymerBlockItem(IRON_FARM_BLOCK, new FabricItemSettings().group(CreativeModeTab.TAB_DECORATIONS), Items.GLASS));
+		Registry.register(Registry.ITEM, IronFarmBlock.ID, new PolymerBlockItem(IRON_FARM_BLOCK, new FabricItemSettings().group(CreativeModeTab.TAB_DECORATIONS), Items.WHITE_STAINED_GLASS));
 		Registry.register(Registry.BLOCK, IronFarmBlock.ID, IRON_FARM_BLOCK);
 
 		IRON_FARM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, IronFarmBlockEntity.ID,

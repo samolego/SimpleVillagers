@@ -47,22 +47,17 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     public int getContainerSize() {
-        return 7;
+        return 7;  // 3 villager slots + 4 output slots
     }
 
     @Override
     public void serverTick() {
         // Produce iron & poppies
-        // Every 4 minutes (20 ticks * 60 seconds * 4 minutes)
+        // Every 4 minutes => 20 ticks * 60 seconds * 4 minutes = 4800 ticks
         if (this.canOperate() && this.tickCount % 20 == 0) {  // todo 4800
             this.tickCount = 0;
             this.produceIron();
         }
-    }
-
-    @Override
-    public boolean canOperate() {
-        return this.items.stream().filter(stack -> stack.getItem() == VILLAGER_ITEM).count() > 2;
     }
 
     private void produceIron() {
@@ -92,6 +87,7 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
         return new LootContext.Builder((ServerLevel) this.level);
     }
 
+
     @Override
     public void onUse(ServerPlayer player) {
         final ItemStack left = new ItemStack(VILLAGER_ITEM);
@@ -103,6 +99,14 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
         right.enchant(null, 0);
 
         new VillagerBlockGui(player, this, this.getDefaultName(), List.of(left, right), this::getSlot).open();
+    }
+
+    @Override
+    protected void updateEmptyStatus(int index) {
+        if (index < 3) {
+            this.setOperative(this.items.stream().filter(stack -> stack.getItem() == VILLAGER_ITEM).count() > 2);
+            super.updateEmptyStatus(index);
+        }
     }
 
     private Slot getSlot(int index) {

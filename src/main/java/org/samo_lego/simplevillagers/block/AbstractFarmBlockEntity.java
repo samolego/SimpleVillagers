@@ -18,17 +18,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static org.samo_lego.simplevillagers.block.AbstractFarmBlock.EMPTY;
+
 public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
 
     protected NonNullList<ItemStack> items;
-    int tickCount;
+    protected int tickCount;
+    private boolean canOperate;
 
     protected AbstractFarmBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
     }
-
-
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack itemStack, @Nullable Direction direction) {
@@ -65,6 +66,7 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
         if (!itemStack.isEmpty()) {
             this.setChanged();
         }
+        this.updateEmptyStatus(index);
         return itemStack;
     }
 
@@ -76,6 +78,7 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
     @Override
     public void setItem(int index, ItemStack stack) {
         this.getItems().set(index, stack);
+        this.updateEmptyStatus(index);
     }
 
     @Override
@@ -88,7 +91,9 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
 
     public abstract void serverTick();
 
-    public abstract boolean canOperate();
+    public boolean canOperate() {
+        return this.canOperate;
+    }
 
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
@@ -115,5 +120,13 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
             ++be.tickCount;
             be.serverTick();
         }
+    }
+
+    protected void updateEmptyStatus(int index) {
+        this.level.setBlock(this.getBlockPos(), this.getBlockState().setValue(EMPTY, !this.canOperate()), 3);
+    }
+
+    protected void setOperative(boolean operative) {
+        this.canOperate = operative;
     }
 }
