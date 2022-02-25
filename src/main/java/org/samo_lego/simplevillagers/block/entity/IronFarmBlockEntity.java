@@ -3,6 +3,7 @@ package org.samo_lego.simplevillagers.block.entity;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +19,9 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
-import org.samo_lego.simplevillagers.gui.NoPutSlot;
 import org.samo_lego.simplevillagers.gui.VillagerBlockGui;
+import org.samo_lego.simplevillagers.gui.slot.OutputSlot;
+import org.samo_lego.simplevillagers.gui.slot.VillagerSlot;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
 
 import java.util.List;
@@ -50,7 +52,7 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     public void serverTick() {
         // Produce iron & poppies
         // Every 4 minutes => 20 ticks * 60 seconds * 4 minutes = 4800 ticks
-        if (this.canOperate() && this.tickCount % 20 == 0) {  // todo 4800
+        if (this.canOperate() && this.tickCount % 100 == 0) {  //todo 4800
             this.tickCount = 0;
             this.produceIron();
         }
@@ -65,17 +67,22 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     private void fillIron(ItemStack stack) {
         if (!stack.isEmpty()) {
-            this.items.stream()
-                    .filter(stack1 ->
-                            stack1.getCount() + stack.getCount() < stack1.getMaxStackSize() && stack1.getItem() == stack.getItem() || stack1.isEmpty())
-                    .findFirst()
-                    .ifPresent(itemStack -> {
-                        if (itemStack.isEmpty()) {
-                            this.items.set(this.items.indexOf(itemStack), stack);
-                        } else {
-                            itemStack.grow(stack.getCount());
-                        }
-                    });
+            this.items
+                .stream()
+                .filter(stack1 ->
+                        stack1.getCount() + stack.getCount() < stack1.getMaxStackSize() && stack1.getItem() == stack.getItem() || stack1.isEmpty())
+                .findFirst()
+                .ifPresent(itemStack -> {
+                    if (itemStack.isEmpty()) {
+                        this.items.set(this.items.indexOf(itemStack), stack);
+                    } else {
+                        itemStack.grow(stack.getCount());
+                    }
+
+                    // Spawn particles
+                    ((ServerLevel) this.level).sendParticles(ParticleTypes.SMOKE, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
+                    ((ServerLevel) this.level).sendParticles(ParticleTypes.SMALL_FLAME, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
+                });
         }
     }
 
@@ -116,7 +123,7 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     }
 
     private Slot getSlot(int index) {
-        return index > 2 ? new NoPutSlot(this, index) : new Slot(this, index, 0, 0);
+        return index > 2 ? new OutputSlot(this, index) : new VillagerSlot(this, index);
     }
 
     @Override

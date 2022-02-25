@@ -98,14 +98,28 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
-        ContainerHelper.saveAllItems(tag, this.getItems());
+        final CompoundTag items = new CompoundTag();
+        ContainerHelper.saveAllItems(items, this.getItems());
+        tag.put("Items", items);
+        tag.putInt("TickCount", this.tickCount);
+        tag.putBoolean("Operative", this.canOperate);
     }
 
     @Override
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, this.getItems());
+
+        final CompoundTag items = tag.getCompound("Items");
+        ContainerHelper.loadAllItems(items, this.items);
+
+        this.tickCount = tag.getInt("TickCount");
+        this.setOperative(tag.getBoolean("Operative"));
+
+
+        if (this.level != null) {
+            this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(EMPTY, !this.canOperate()));
+        }
     }
 
     @Override
@@ -123,7 +137,7 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
     }
 
     protected void updateEmptyStatus(int index) {
-        this.level.setBlock(this.getBlockPos(), this.getBlockState().setValue(EMPTY, !this.canOperate()), 3);
+        this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(EMPTY, !this.canOperate()));
     }
 
     protected void setOperative(boolean operative) {
