@@ -1,4 +1,4 @@
-package org.samo_lego.simplevillagers.block;
+package org.samo_lego.simplevillagers.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

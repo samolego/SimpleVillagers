@@ -1,18 +1,18 @@
-package org.samo_lego.simplevillagers.block;
+package org.samo_lego.simplevillagers.block.entity;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
 import org.samo_lego.simplevillagers.gui.NoPutSlot;
 import org.samo_lego.simplevillagers.gui.VillagerBlockGui;
+import org.samo_lego.simplevillagers.util.VillagerUtil;
 
 import java.util.List;
 
@@ -33,11 +34,6 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     public IronFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(IRON_FARM_BLOCK_ENTITY, blockPos, blockState);
-    }
-
-    public static void tick(Level level, BlockPos pos, BlockState state, IronFarmBlockEntity be) {
-        if (!level.isClientSide)
-            be.serverTick();
     }
 
     @Override
@@ -91,21 +87,31 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void onUse(ServerPlayer player) {
         final ItemStack left = new ItemStack(VILLAGER_ITEM);
-        left.setHoverName(new TextComponent("<- ").append(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId())));
+        left.setHoverName(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
         left.enchant(null, 0);
 
         final ItemStack right = new ItemStack(Items.IRON_INGOT);
         right.setHoverName(new TranslatableComponent("gamerule.category.drops").append(" ->"));
         right.enchant(null, 0);
 
-        new VillagerBlockGui(player, this, this.getDefaultName(), List.of(left, right), this::getSlot).open();
+        new VillagerBlockGui(MenuType.GENERIC_9x1, player, this, List.of(Pair.of(left, 3), Pair.of(right, 4)), this::getSlot).open();
     }
 
     @Override
     protected void updateEmptyStatus(int index) {
         if (index < 3) {
-            this.setOperative(this.items.stream().filter(stack -> stack.getItem() == VILLAGER_ITEM).count() > 2);
-            super.updateEmptyStatus(index);
+            boolean canOperate = true;
+            // Check first 3 slots for villagers
+            for (int i = 0; i < 3; i++) {
+                final ItemStack stack = this.items.get(i);
+                canOperate &= stack.getItem() == VILLAGER_ITEM && !VillagerUtil.isBaby(stack);
+            }
+
+            // Update only if the status has changed
+            if (canOperate != this.canOperate()) {
+                this.setOperative(canOperate);
+                super.updateEmptyStatus(index);
+            }
         }
     }
 

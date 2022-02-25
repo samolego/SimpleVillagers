@@ -13,8 +13,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Material;
+import org.samo_lego.simplevillagers.block.BreederBlock;
 import org.samo_lego.simplevillagers.block.IronFarmBlock;
-import org.samo_lego.simplevillagers.block.IronFarmBlockEntity;
+import org.samo_lego.simplevillagers.block.entity.BreederBlockEntity;
+import org.samo_lego.simplevillagers.block.entity.IronFarmBlockEntity;
 import org.samo_lego.simplevillagers.item.VillagerItem;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
 import org.slf4j.Logger;
@@ -28,6 +30,9 @@ public class SimpleVillagers implements ModInitializer {
 	public static final IronFarmBlock IRON_FARM_BLOCK = new IronFarmBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(4.0f));
 	public static BlockEntityType<IronFarmBlockEntity> IRON_FARM_BLOCK_ENTITY;
 
+	public static final BreederBlock BREEDER_BLOCK = new BreederBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(4.0f));
+	public static BlockEntityType<BreederBlockEntity> BREEDER_BLOCK_ENTITY;
+
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Loading SimpleVillagers ...");
@@ -35,12 +40,19 @@ public class SimpleVillagers implements ModInitializer {
 		UseEntityCallback.EVENT.register(VillagerUtil::onUseEntity);
 		Registry.register(Registry.ITEM, VillagerItem.ID, VILLAGER_ITEM);
 
-		Registry.register(Registry.ITEM, IronFarmBlock.ID, new PolymerBlockItem(IRON_FARM_BLOCK, new FabricItemSettings().group(CreativeModeTab.TAB_DECORATIONS), Items.WHITE_STAINED_GLASS));
+		Registry.register(Registry.ITEM, IronFarmBlock.ID, new PolymerBlockItem(IRON_FARM_BLOCK, new FabricItemSettings().group(CreativeModeTab.TAB_DECORATIONS), Items.GLASS));
 		Registry.register(Registry.BLOCK, IronFarmBlock.ID, IRON_FARM_BLOCK);
 
 		IRON_FARM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, IronFarmBlockEntity.ID,
 				FabricBlockEntityTypeBuilder.create(IronFarmBlockEntity::new, IRON_FARM_BLOCK).build(null));
 
-		PolymerBlockUtils.registerBlockEntity(IRON_FARM_BLOCK_ENTITY);
+
+		Registry.register(Registry.ITEM, BreederBlock.ID, new PolymerBlockItem(BREEDER_BLOCK, new FabricItemSettings().group(CreativeModeTab.TAB_DECORATIONS), Items.GLASS));
+		Registry.register(Registry.BLOCK, BreederBlock.ID, BREEDER_BLOCK);
+
+		BREEDER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BreederBlockEntity.ID,
+				FabricBlockEntityTypeBuilder.create(BreederBlockEntity::new, BREEDER_BLOCK).build(null));
+
+		PolymerBlockUtils.registerBlockEntity(IRON_FARM_BLOCK_ENTITY, BREEDER_BLOCK_ENTITY);
 	}
 }

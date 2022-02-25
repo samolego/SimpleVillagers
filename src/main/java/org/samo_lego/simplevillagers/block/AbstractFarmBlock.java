@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
+import org.samo_lego.simplevillagers.block.entity.AbstractFarmBlockEntity;
 
 @SuppressWarnings({"deprecation"})
 public abstract class AbstractFarmBlock extends BaseEntityBlock implements PolymerBlock, EntityBlock {

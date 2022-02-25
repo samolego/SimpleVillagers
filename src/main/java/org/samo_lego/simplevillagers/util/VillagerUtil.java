@@ -19,6 +19,14 @@ import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
 public interface VillagerUtil {
     void forceDefaultTradingScreen(boolean force);
 
+    static boolean isBaby(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if (tag != null) {
+            return tag.getInt("Age") < 0;
+        }
+        return false;
+    }
+
     static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
         if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && Permissions.check(pl, "simplevillagers.villager_item.pickup", true)) {
             // Get the villager item
@@ -41,23 +49,26 @@ public interface VillagerUtil {
                 // Remove the villager
                 ((AVillager) villager).callReleaseAllPois();
 
-                villager.saveWithoutId(villagerTag);
-                final CompoundTag brain = villagerTag.getCompound("Brain");
-                if (!brain.isEmpty()) {
-                    final CompoundTag memories = brain.getCompound("memories");
+                if (villager.getVillagerXp() > 0) {
+                    villager.saveWithoutId(villagerTag);
+                    final CompoundTag brain = villagerTag.getCompound("Brain");
+                    if (!brain.isEmpty()) {
+                        final CompoundTag memories = brain.getCompound("memories");
 
-                    if (!memories.isEmpty()) {
-                        memories.remove("minecraft:job_site");
+                        if (!memories.isEmpty()) {
+                            memories.remove("minecraft:job_site");
+                        }
                     }
+
+                    villagerTag.remove("Pos");
+                    villagerTag.remove("Motion");
+                    villagerTag.remove("Rotation");
+                    villagerTag.remove("UUID");
+                    villagerTag.remove("Dimension");
+
+                    stack.setTag(villagerTag);
                 }
 
-                villagerTag.remove("Pos");
-                villagerTag.remove("Motion");
-                villagerTag.remove("Rotation");
-                villagerTag.remove("UUID");
-                villagerTag.remove("Dimension");
-
-                stack.setTag(villagerTag);
 
                 villager.discard();
             }
