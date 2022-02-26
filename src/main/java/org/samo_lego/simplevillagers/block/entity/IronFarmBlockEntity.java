@@ -27,6 +27,7 @@ import org.samo_lego.simplevillagers.gui.slot.VillagerSlot;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.samo_lego.simplevillagers.SimpleVillagers.IRON_FARM_BLOCK_ENTITY;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
@@ -36,9 +37,13 @@ import static org.samo_lego.simplevillagers.block.IronFarmBlock.HAS_GOLEM;
 public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "iron_farm_block_entity");
+    private boolean hasStorageSpace;
+    private boolean hasGolem;
 
     public IronFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(IRON_FARM_BLOCK_ENTITY, blockPos, blockState);
+        this.hasStorageSpace = true;
+        this.hasGolem = false;
     }
 
     @Override
@@ -55,15 +60,18 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     public void serverTick() {
         // Produce iron & poppies
         // Every 4 minutes => 20 ticks * 60 seconds * 4 minutes = 4800 ticks
-        if (this.canOperate() && this.tickCount % 100 == 0) {  //todo 4800
+        if (this.canOperate() && this.tickCount % 4800 == 0) {  //todo 4800
             this.tickCount = 0;
             this.produceIron();
-            this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_DEATH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(HAS_GOLEM, false));
-        } else if (this.canOperate() && this.tickCount % 20 == 0 && this.tickCount >= 60) {
+            this.hasGolem = false;
+        } else if (this.canOperate() && this.tickCount % 10 == 0 && this.tickCount >= 4560 && this.hasStorageSpace) {  // 4800 - 240 = 4560
             this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.BLOCKS, 1.0F, 1.0F);
-            if (this.tickCount == 60)
+
+            if (!this.hasGolem) {
+                ((ServerLevel) this.level).sendParticles(ParticleTypes.FLAME, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
                 this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(HAS_GOLEM, true));
+                this.hasGolem = true;
+            }
         }
     }
 
@@ -76,22 +84,31 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     private void fillIron(ItemStack stack) {
         if (!stack.isEmpty()) {
-            this.items
-                .stream()
-                .filter(stack1 ->
-                        stack1.getCount() + stack.getCount() < stack1.getMaxStackSize() && stack1.getItem() == stack.getItem() || stack1.isEmpty())
-                .findFirst()
-                .ifPresent(itemStack -> {
-                    if (itemStack.isEmpty()) {
-                        this.items.set(this.items.indexOf(itemStack), stack);
-                    } else {
-                        itemStack.grow(stack.getCount());
-                    }
+            Optional<ItemStack> slot = this.items
+                    .stream()
+                    .filter(stack1 ->
+                            stack1.getCount() + stack.getCount() < stack1.getMaxStackSize() && stack1.getItem() == stack.getItem() || stack1.isEmpty())
+                    .findFirst();
 
-                    // Spawn particles
-                    ((ServerLevel) this.level).sendParticles(ParticleTypes.SMOKE, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
-                    ((ServerLevel) this.level).sendParticles(ParticleTypes.SMALL_FLAME, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
-                });
+            this.hasStorageSpace = slot.isPresent();
+
+            if (this.hasStorageSpace && this.hasGolem) {
+                final ItemStack itemStack = slot.get();
+                if (itemStack.isEmpty()) {
+                    this.items.set(this.items.indexOf(itemStack), stack);
+                } else {
+                    itemStack.grow(stack.getCount());
+                }
+
+                this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_DEATH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(HAS_GOLEM, false));
+
+                // Spawn particles
+                ((ServerLevel) this.level).sendParticles(ParticleTypes.SMOKE, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
+                ((ServerLevel) this.level).sendParticles(ParticleTypes.SMALL_FLAME, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
+            }
+        } else {
+            this.hasStorageSpace = true;
         }
     }
 

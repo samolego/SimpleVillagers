@@ -3,7 +3,10 @@
     "empty=true": {
       "model": "simplevillagers:block/iron_farm_block_empty"
     },
-    "empty=false": {
+    "empty=false,golem=false": {
+      "model": "simplevillagers:block/iron_farm_block_villagers"
+    },
+    "empty=false,golem=true": {
       "model": "simplevillagers:block/iron_farm_block_golem"
     }
   }
