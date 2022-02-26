@@ -21,6 +21,9 @@
   "entrypoints": {
     "main": [
       "org.samo_lego.simplevillagers.SimpleVillagers"
+    ],
+    "client": [
+      "org.samo_lego.simplevillagers.client.ClientInit"
     ]
   },
   "mixins": [

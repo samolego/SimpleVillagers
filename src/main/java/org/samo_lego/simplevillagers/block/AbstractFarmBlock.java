@@ -1,6 +1,8 @@
 package org.samo_lego.simplevillagers.block;
 
 import eu.pb4.polymer.api.block.PolymerBlock;
+import eu.pb4.polymer.api.client.PolymerClientDecoded;
+import eu.pb4.polymer.api.client.PolymerKeepModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -10,7 +12,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.samo_lego.simplevillagers.block.entity.AbstractFarmBlockEntity;
 
 @SuppressWarnings({"deprecation"})
-public abstract class AbstractFarmBlock extends BaseEntityBlock implements PolymerBlock, EntityBlock {
+public abstract class AbstractFarmBlock extends BaseEntityBlock implements PolymerBlock, PolymerClientDecoded, PolymerKeepModel, EntityBlock {
     public static final BooleanProperty EMPTY = BooleanProperty.create("empty");
 
     public AbstractFarmBlock(Properties properties) {
@@ -31,13 +32,6 @@ public abstract class AbstractFarmBlock extends BaseEntityBlock implements Polym
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(EMPTY);
-    }
-
-
-    @Override
-    public RenderShape getRenderShape(@NotNull BlockState state) {
-        // With inheriting from BlockWithEntity this defaults to INVISIBLE, so we need to change that!
-        return RenderShape.MODEL;
     }
 
     @Override

@@ -7,7 +7,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -50,7 +49,7 @@ public interface VillagerUtil {
                 // Remove the villager
                 ((AVillager) villager).callReleaseAllPois();
 
-                if (villager.getVillagerData().getProfession() != VillagerProfession.NONE || villager.isBaby()) {
+                if (villager.getVillagerXp() > 0 || villager.isBaby()) {
                     villager.saveWithoutId(villagerTag);
                     final CompoundTag brain = villagerTag.getCompound("Brain");
                     if (!brain.isEmpty()) {
