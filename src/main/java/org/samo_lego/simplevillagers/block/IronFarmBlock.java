@@ -44,6 +44,11 @@ public class IronFarmBlock extends AbstractFarmBlock {
     }
 
     @Override
+     public Block getPolymerBlock(ServerPlayer player, BlockState state) {
+        return isVanilla(player) ? this.getPolymerBlock(state) : this;
+    }
+
+    @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         return createTickerHelper(type, IRON_FARM_BLOCK_ENTITY, AbstractFarmBlockEntity::tick);

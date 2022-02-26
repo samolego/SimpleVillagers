@@ -26,7 +26,7 @@ public abstract class AbstractFarmBlock extends BaseEntityBlock implements Polym
 
     public AbstractFarmBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(EMPTY, true));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(EMPTY, true));
     }
 
     @Override
