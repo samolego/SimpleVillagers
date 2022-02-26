@@ -27,10 +27,10 @@ public class SimpleVillagers implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final Item VILLAGER_ITEM = new VillagerItem(new FabricItemSettings().group(CreativeModeTab.TAB_MATERIALS).maxCount(1));
 
-	public static final IronFarmBlock IRON_FARM_BLOCK = new IronFarmBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(4.0f));
+	public static final IronFarmBlock IRON_FARM_BLOCK = new IronFarmBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(4.0f).nonOpaque());
 	public static BlockEntityType<IronFarmBlockEntity> IRON_FARM_BLOCK_ENTITY;
 
-	public static final BreederBlock BREEDER_BLOCK = new BreederBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(4.0f));
+	public static final BreederBlock BREEDER_BLOCK = new BreederBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(4.0f).nonOpaque());
 	public static BlockEntityType<BreederBlockEntity> BREEDER_BLOCK_ENTITY;
 
 	@Override

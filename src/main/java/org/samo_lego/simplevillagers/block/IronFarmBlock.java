@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.samo_lego.simplevillagers.block.entity.AbstractFarmBlockEntity;
@@ -21,6 +23,7 @@ import static org.samo_lego.simplevillagers.network.NetworkHandler.isVanilla;
 
 public class IronFarmBlock extends AbstractFarmBlock {
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "iron_farm_block");
+    public static final BooleanProperty HAS_GOLEM = BooleanProperty.create("golem");
 
     public IronFarmBlock(Properties properties) {
         super(properties);
@@ -36,6 +39,13 @@ public class IronFarmBlock extends AbstractFarmBlock {
             }
         }
         return Blocks.WHITE_STAINED_GLASS;
+    }
+
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(HAS_GOLEM);
     }
 
     @Override

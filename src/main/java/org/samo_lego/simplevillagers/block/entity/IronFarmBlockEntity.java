@@ -9,6 +9,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
@@ -29,6 +31,7 @@ import java.util.List;
 import static org.samo_lego.simplevillagers.SimpleVillagers.IRON_FARM_BLOCK_ENTITY;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
+import static org.samo_lego.simplevillagers.block.IronFarmBlock.HAS_GOLEM;
 
 public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
@@ -55,6 +58,12 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
         if (this.canOperate() && this.tickCount % 100 == 0) {  //todo 4800
             this.tickCount = 0;
             this.produceIron();
+            this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_DEATH, SoundSource.BLOCKS, 1.0F, 1.0F);
+            this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(HAS_GOLEM, false));
+        } else if (this.canOperate() && this.tickCount % 20 == 0 && this.tickCount >= 60) {
+            this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (this.tickCount == 60)
+                this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(HAS_GOLEM, true));
         }
     }
 
