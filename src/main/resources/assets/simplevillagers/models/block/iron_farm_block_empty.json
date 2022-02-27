@@ -4,7 +4,8 @@
 	"textures": {
 		"0": "minecraft:block/lava_still",
 		"1": "minecraft:block/stone",
-		"2": "minecraft:block/glass"
+		"2": "minecraft:block/glass",
+		"particle": "block/glass"
 	},
 	"elements": [
 		{

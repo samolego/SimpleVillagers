@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "minecraft:block/redstone_block"
+    "empty=true": {
+      "model": "simplevillagers:block/breeder_block_empty"
+    },
+    "empty=false": {
+      "model": "simplevillagers:block/breeder_block"
     }
   }
 }

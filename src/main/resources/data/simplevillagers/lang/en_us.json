@@ -6,5 +6,6 @@
   "container.simplevillagers.breeder": "Villager Breeder",
   "item.simplevillagers.villager_item": "Picked Villager",
   "block.simplevillagers.iron_farm_block": "Iron Farm Block",
-  "block.simplevillagers.breeder_block": "Breeder Block"
+  "block.simplevillagers.breeder_block": "Breeder Block",
+  "command.simplevilagers.config.reload.success": "Config reloaded successfully."
 }

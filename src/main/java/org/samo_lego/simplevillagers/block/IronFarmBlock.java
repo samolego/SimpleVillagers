@@ -27,6 +27,7 @@ public class IronFarmBlock extends AbstractFarmBlock {
 
     public IronFarmBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.getStateDefinition().any().setValue(HAS_GOLEM, false));
     }
 
     @Override

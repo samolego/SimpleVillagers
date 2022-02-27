@@ -29,6 +29,7 @@ import org.samo_lego.simplevillagers.util.VillagerUtil;
 import java.util.List;
 import java.util.Optional;
 
+import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
 import static org.samo_lego.simplevillagers.SimpleVillagers.IRON_FARM_BLOCK_ENTITY;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
@@ -60,11 +61,11 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     public void serverTick() {
         // Produce iron & poppies
         // Every 4 minutes => 20 ticks * 60 seconds * 4 minutes = 4800 ticks
-        if (this.canOperate() && this.tickCount % 4800 == 0) {  //todo 4800
+        if (this.canOperate() && this.tickCount % CONFIG.golemTimer == 0) {
             this.tickCount = 0;
             this.produceIron();
             this.hasGolem = false;
-        } else if (this.canOperate() && this.tickCount % 10 == 0 && this.tickCount >= 4560 && this.hasStorageSpace) {  // 4800 - 240 = 4560
+        } else if (this.canOperate() && this.tickCount % 10 == 0 && this.tickCount >= CONFIG.golemTimer - CONFIG.golemDyingTicks && this.hasStorageSpace) {  // 4800 - 240 = 4560
             this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.BLOCKS, 1.0F, 1.0F);
 
             if (!this.hasGolem) {

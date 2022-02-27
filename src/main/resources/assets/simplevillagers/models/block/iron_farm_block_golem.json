@@ -8,7 +8,8 @@
 		"3": "entity/zombie/zombie",
 		"4": "entity/villager/type/plains",
 		"5": "entity/villager/villager",
-		"6": "entity/iron_golem/iron_golem"
+		"6": "entity/iron_golem/iron_golem",
+		"particle": "block/glass"
 	},
 	"elements": [
 		{

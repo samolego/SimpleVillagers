@@ -7,7 +7,8 @@
 		"2": "block/glass",
 		"3": "entity/zombie/zombie",
 		"4": "entity/villager/type/plains",
-		"5": "entity/villager/villager"
+		"5": "entity/villager/villager",
+		"particle": "block/glass"
 	},
 	"elements": [
 		{

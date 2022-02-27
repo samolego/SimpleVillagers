@@ -28,6 +28,7 @@ import java.util.List;
 import static net.minecraft.world.entity.npc.Villager.BREEDING_FOOD_THRESHOLD;
 import static net.minecraft.world.entity.npc.Villager.FOOD_POINTS;
 import static org.samo_lego.simplevillagers.SimpleVillagers.BREEDER_BLOCK_ENTITY;
+import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
 
@@ -47,7 +48,7 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
     public void serverTick() {
         // Baby villagers
         // Every 5 minutes => 20 ticks * 60 seconds * 5 minutes = 6000 ticks
-        if (this.canOperate() && this.foodReserves >= BREEDING_FOOD_THRESHOLD && this.tickCount % 100 == 0) {  //todo 6000
+        if (this.canOperate() && this.foodReserves >= BREEDING_FOOD_THRESHOLD && this.tickCount % CONFIG.breedingTimer == 0) {
             this.tickCount = 0;
 
             // If uncommented, imitates the villager's breeding behavior in vanilla
@@ -70,6 +71,8 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
                     final CompoundTag babyTag = new CompoundTag();
                     babyTag.putInt("Age", -24000);
                     babyVillager.setTag(babyTag);
+
+                    final CompoundTag lore = new CompoundTag();
 
                     this.items.set(i, babyVillager.copy());
                     break;
@@ -103,10 +106,14 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
         for (int i = size - 4; i < size; i++) {
             final ItemStack stack = this.items.get(i);
             final CompoundTag tag = stack.getTag();
+
             if (tag != null && tag.contains("Age")) {
                 int age = tag.getInt("Age");
-                ++age;
-                tag.putInt("Age", age);
+                if (++age == 0) {
+                    tag.remove("Age");
+                } else {
+                    tag.putInt("Age", age);
+                }
             }
         }
     }
