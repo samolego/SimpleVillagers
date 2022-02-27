@@ -4,5 +4,6 @@
   "simplevillagers.hide_buttons": "Skrij te gumbe",
   "item.simplevillagers.villager_item": "Pobrani vaščan",
   "container.simplevillagers.iron_farm": "Farma železa",
-  "command.simplevilagers.config.reload.success": "Nastavitve uspešno posodobljene."
+  "command.simplevilagers.config.reload.success": "Nastavitve uspešno posodobljene.",
+  "itemGroup.simplevillagers.general": "Preprosti Vaščani"
 }

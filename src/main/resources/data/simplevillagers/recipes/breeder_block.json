@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#R#",
+        "iAi"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glass_pane"
+        },
+        "R": {
+            "tag": "minecraft:beds"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "A": {
+            "tag": "minecraft:planks"
+        }
+    },
+    "result": {
+        "item": "simplevillagers:breeder_block",
+        "count": 1
+    }
+}

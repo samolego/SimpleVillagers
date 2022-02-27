@@ -1,0 +1,27 @@
+
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#R#",
+        "iAi"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glass_pane"
+        },
+        "R": {
+            "item": "minecraft:lava_bucket"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "A": {
+            "item": "minecraft:stone"
+        }
+    },
+    "result": {
+        "item": "simplevillagers:iron_farm_block",
+        "count": 1
+    }
+}

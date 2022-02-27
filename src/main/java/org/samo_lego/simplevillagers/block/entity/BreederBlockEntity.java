@@ -5,7 +5,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -47,6 +50,8 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void serverTick() {
         // Baby villagers
+
+        this.growBabies();
         // Every 5 minutes => 20 ticks * 60 seconds * 5 minutes = 6000 ticks
         if (this.canOperate() && this.foodReserves >= BREEDING_FOOD_THRESHOLD && this.tickCount % CONFIG.breedingTimer == 0) {
             this.tickCount = 0;
@@ -69,18 +74,22 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
                     // Create baby villager item stack
                     final ItemStack babyVillager = new ItemStack(VILLAGER_ITEM);
                     final CompoundTag babyTag = new CompoundTag();
-                    babyTag.putInt("Age", -24000);
-                    babyVillager.setTag(babyTag);
+                    babyTag.putInt("Age", CONFIG.babyAge);
 
-                    final CompoundTag lore = new CompoundTag();
+                    // "Baby" lore
+                    final CompoundTag loreTag = new CompoundTag();
+                    final ListTag nbtLore = new ListTag();
+                    nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent("Baby"))));
+                    loreTag.put(ItemStack.TAG_LORE, nbtLore);
+                    babyTag.put(ItemStack.TAG_DISPLAY, loreTag);
+
+                    babyVillager.setTag(babyTag);
 
                     this.items.set(i, babyVillager.copy());
                     break;
                 }
             }
         }
-
-        this.growBabies();
     }
 
     private void decreaseFoodReserves() {
@@ -109,7 +118,7 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
 
             if (tag != null && tag.contains("Age")) {
                 int age = tag.getInt("Age");
-                if (++age == 0) {
+                if (++age >= 0) {
                     tag.remove("Age");
                 } else {
                     tag.putInt("Age", age);

@@ -3,7 +3,7 @@
 	"particle": "minecraft:block/glass",
 	"textures": {
 		"0": "minecraft:block/lava_still",
-		"1": "minecraft:block/stone",
+		"1": "minecraft:block/iron_block",
 		"2": "block/glass",
 		"3": "entity/zombie/zombie",
 		"4": "entity/villager/type/plains",

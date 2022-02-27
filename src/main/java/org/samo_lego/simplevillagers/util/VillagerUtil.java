@@ -2,6 +2,10 @@ package org.samo_lego.simplevillagers.util;
 
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -65,6 +69,15 @@ public interface VillagerUtil {
                     villagerTag.remove("Rotation");
                     villagerTag.remove("UUID");
                     villagerTag.remove("Dimension");
+
+                    if (villager.isBaby()) {
+                        final CompoundTag loreTag = new CompoundTag();
+                        final ListTag nbtLore = new ListTag();
+                        nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent("Baby"))));
+                        loreTag.put(ItemStack.TAG_LORE, nbtLore);
+
+                        villagerTag.put(ItemStack.TAG_DISPLAY, loreTag);
+                    }
 
                     stack.setTag(villagerTag);
                 }

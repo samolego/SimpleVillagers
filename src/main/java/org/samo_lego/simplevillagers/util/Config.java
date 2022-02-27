@@ -43,6 +43,13 @@ public class Config implements IBrigadierConfigurator {
     public int breedingTimer = 6000;
 
 
+    @SerializedName("// Age of new baby villagers. Default is 20 minutes to grow up (like in vanilla).")
+    public final String _comment_baby_age = "";
+    @BrigadierDescription(defaultOption = "-24000")
+    @SerializedName("baby_age")
+    public int babyAge = -24000;
+
+
     /**
      * Loads config file.
      *

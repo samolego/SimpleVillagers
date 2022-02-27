@@ -3,6 +3,7 @@ package org.samo_lego.simplevillagers.network;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.Nullable;
 
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 
@@ -12,7 +13,7 @@ import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 public class NetworkHandler {
     public static final ResourceLocation SV_HELLO = new ResourceLocation(MOD_ID, "hello");
 
-    public static boolean isVanilla(ServerPlayer player) {
-        return !ServerPlayNetworking.canSend(player, SV_HELLO);
+    public static boolean isVanilla(@Nullable ServerPlayer player) {
+        return player == null || !ServerPlayNetworking.canSend(player, SV_HELLO);
     }
 }
