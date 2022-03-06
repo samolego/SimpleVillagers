@@ -17,6 +17,9 @@ https://user-images.githubusercontent.com/34912839/155026528-754712a2-32f3-42a9-
 Don't worry, even though you get a villager item that looks like spawn egg, it actually isn't under the hood.
 ~~It just uses spawn egg texture as I was too lazy to draw my own.~~
 
+## Blocks
+* `simplevillagers:villager_item` - villager item
+
 ## Why so big jar file?
 SimpleVillagers wouldn't have been possible without the help of the following libraries:
 * [SGUI](https://github.com/Patbox/sgui)

@@ -1,5 +1,7 @@
 package org.samo_lego.simplevillagers.item;
 
+import eu.pb4.polymer.api.client.PolymerClientDecoded;
+import eu.pb4.polymer.api.client.PolymerKeepModel;
 import eu.pb4.polymer.api.item.PolymerBlockItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
@@ -10,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import static org.samo_lego.simplevillagers.SimpleVillagers.BREEDER_BLOCK;
 import static org.samo_lego.simplevillagers.network.NetworkHandler.isVanilla;
 
-public class BreederBlockItem extends PolymerBlockItem {
+public class BreederBlockItem extends PolymerBlockItem implements PolymerClientDecoded, PolymerKeepModel {
     public BreederBlockItem(Properties settings) {
         super(BREEDER_BLOCK, settings, Items.RED_STAINED_GLASS);
     }
