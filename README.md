@@ -1,5 +1,10 @@
 # Simple Villagers
 
+[![https://discord.gg/9PAesuHFnp](https://img.shields.io/discord/797713290545332235?logo=discord&style=flat-square)](https://discord.gg/9PAesuHFnp)
+[![GitHub license](https://img.shields.io/github/license/samolego/SimpleVillagers?style=flat-square)](https://github.com/samolego/SimpleVillagers/blob/master/LICENSE)
+[![Server environment](https://img.shields.io/badge/Environment-server-blue?style=flat-square)](https://github.com/samolego/SimpleVillagers)
+[![Singleplayer environment](https://img.shields.io/badge/Environment-singleplayer-yellow?style=flat-square)](https://github.com/samolego/SimpleVillagers)
+
 A serverside fabric mod inspired by https://github.com/henkelmax/easy-villagers.
 
 
