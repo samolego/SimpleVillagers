@@ -28,6 +28,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.samo_lego.simplevillagers.block.entity.AbstractFarmBlockEntity;
 
+import static org.samo_lego.simplevillagers.network.NetworkHandler.isVanilla;
+
 @SuppressWarnings({"deprecation"})
 public abstract class AbstractFarmBlock extends BaseEntityBlock implements PolymerBlock, PolymerClientDecoded, PolymerKeepModel, EntityBlock {
     public static final BooleanProperty EMPTY = BooleanProperty.create("empty");
@@ -95,6 +97,16 @@ public abstract class AbstractFarmBlock extends BaseEntityBlock implements Polym
             level.updateNeighbourForOutputSignal(pos, this);
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(ServerPlayer player, BlockState state) {
+        return isVanilla(player) ? this.getPolymerBlockState(state) : state;
+    }
+
+    @Override
+    public Block getPolymerBlock(ServerPlayer player, BlockState state) {
+        return isVanilla(player) ? this.getPolymerBlock(state) : state.getBlock();
     }
 }
 

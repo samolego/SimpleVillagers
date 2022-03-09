@@ -149,6 +149,12 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
         }
     }
 
+
+    @Override
+    public int getScreenSize() {
+        return this.getContainerSize();
+    }
+
     private Slot getSlot(int index) {
         return index > 2 ? new OutputSlot(this, index) : new VillagerSlot(this, index);
     }

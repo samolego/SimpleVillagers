@@ -92,6 +92,11 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
         }
     }
 
+    @Override
+    public int getScreenSize() {
+        return 18;  // 2 rows * 9 slots
+    }
+
     private void decreaseFoodReserves() {
         List<ItemStack> foods = this.items.stream().filter(stack -> FOOD_POINTS.containsKey(stack.getItem())).toList();
 
