@@ -91,6 +91,8 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
 
     public abstract void serverTick();
 
+    public abstract int getScreenSize();
+
     public boolean canOperate() {
         return this.canOperate;
     }

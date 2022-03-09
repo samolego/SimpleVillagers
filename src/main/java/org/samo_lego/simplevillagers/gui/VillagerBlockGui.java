@@ -32,8 +32,9 @@ public class VillagerBlockGui extends SimpleGui {
         }
 
         final ItemStack emptySlot = new ItemStack(Items.BLACK_STAINED_GLASS_PANE);
-        if (count < itemContainer.getContainerSize()) {
-            for (int i = 0; i < itemContainer.getContainerSize() - count; i++) {
+        count += dividerSlots.size();
+        if (count < itemContainer.getScreenSize()) {
+            for (int i = 0; i < itemContainer.getScreenSize() - count; i++) {
                 this.setSlot(i + count, emptySlot);  // Empty slots
             }
         }

@@ -2,7 +2,6 @@ package org.samo_lego.simplevillagers.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,7 +18,6 @@ import org.samo_lego.simplevillagers.block.entity.IronFarmBlockEntity;
 
 import static org.samo_lego.simplevillagers.SimpleVillagers.IRON_FARM_BLOCK_ENTITY;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
-import static org.samo_lego.simplevillagers.network.NetworkHandler.isVanilla;
 
 public class IronFarmBlock extends AbstractFarmBlock {
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "iron_farm_block");
@@ -47,16 +45,6 @@ public class IronFarmBlock extends AbstractFarmBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(HAS_GOLEM);
-    }
-
-    @Override
-    public BlockState getPolymerBlockState(ServerPlayer player, BlockState state) {
-        return isVanilla(player) ? this.getPolymerBlockState(state) : state;
-    }
-
-    @Override
-     public Block getPolymerBlock(ServerPlayer player, BlockState state) {
-        return isVanilla(player) ? this.getPolymerBlock(state) : this;
     }
 
     @Override
