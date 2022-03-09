@@ -24,7 +24,7 @@ import org.samo_lego.simplevillagers.block.entity.BreederBlockEntity;
 import org.samo_lego.simplevillagers.block.entity.ConverterBlockEntity;
 import org.samo_lego.simplevillagers.block.entity.IronFarmBlockEntity;
 import org.samo_lego.simplevillagers.command.SimpleVillagersCommand;
-import org.samo_lego.simplevillagers.item.VillagerBlockItem;
+import org.samo_lego.simplevillagers.item.FarmBlockItem;
 import org.samo_lego.simplevillagers.item.VillagerItem;
 import org.samo_lego.simplevillagers.util.Config;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
@@ -50,7 +50,7 @@ public class SimpleVillagers implements ModInitializer {
 	public static final BreederBlock BREEDER_BLOCK = new BreederBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(2.0f).nonOpaque());
 	public static BlockEntityType<BreederBlockEntity> BREEDER_BLOCK_ENTITY;
 
-	public static final BreederBlock CONVERTER_BLOCK = new BreederBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(2.0f).nonOpaque());
+	public static final ConverterBlock CONVERTER_BLOCK = new ConverterBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(2.0f).nonOpaque());
 	public static BlockEntityType<ConverterBlockEntity> CONVERTER_BLOCK_ENTITY;
 
 	private static File configFile;
@@ -67,19 +67,19 @@ public class SimpleVillagers implements ModInitializer {
 		Registry.register(Registry.ITEM, VillagerItem.ID, VILLAGER_ITEM);
 
 
-		Registry.register(Registry.ITEM, IronFarmBlock.ID, new VillagerBlockItem(IRON_FARM_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.WHITE_STAINED_GLASS));
+		Registry.register(Registry.ITEM, IronFarmBlock.ID, new FarmBlockItem(IRON_FARM_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.WHITE_STAINED_GLASS));
 		Registry.register(Registry.BLOCK, IronFarmBlock.ID, IRON_FARM_BLOCK);
 		IRON_FARM_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, IronFarmBlockEntity.ID,
 				FabricBlockEntityTypeBuilder.create(IronFarmBlockEntity::new, IRON_FARM_BLOCK).build(null));
 
 
-		Registry.register(Registry.ITEM, BreederBlock.ID, new VillagerBlockItem(BREEDER_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.RED_STAINED_GLASS));
+		Registry.register(Registry.ITEM, BreederBlock.ID, new FarmBlockItem(BREEDER_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.RED_STAINED_GLASS));
 		Registry.register(Registry.BLOCK, BreederBlock.ID, BREEDER_BLOCK);
 		BREEDER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, BreederBlockEntity.ID,
 				FabricBlockEntityTypeBuilder.create(BreederBlockEntity::new, BREEDER_BLOCK).build(null));
 
 
-		Registry.register(Registry.ITEM, ConverterBlock.ID, new VillagerBlockItem(CONVERTER_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.GREEN_STAINED_GLASS));
+		Registry.register(Registry.ITEM, ConverterBlock.ID, new FarmBlockItem(CONVERTER_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.GREEN_STAINED_GLASS));
 		Registry.register(Registry.BLOCK, ConverterBlock.ID, CONVERTER_BLOCK);
 		CONVERTER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, ConverterBlockEntity.ID,
 				FabricBlockEntityTypeBuilder.create(ConverterBlockEntity::new, CONVERTER_BLOCK).build(null));

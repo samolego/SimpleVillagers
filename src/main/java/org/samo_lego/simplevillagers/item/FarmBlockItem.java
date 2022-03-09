@@ -11,8 +11,8 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.samo_lego.simplevillagers.network.NetworkHandler.isVanilla;
 
-public class VillagerBlockItem extends PolymerBlockItem implements PolymerClientDecoded, PolymerKeepModel{
-    public VillagerBlockItem(Block block, Properties settings, Item virtualItem) {
+public class FarmBlockItem extends PolymerBlockItem implements PolymerClientDecoded, PolymerKeepModel{
+    public FarmBlockItem(Block block, Properties settings, Item virtualItem) {
         super(block, settings, virtualItem);
     }
 
