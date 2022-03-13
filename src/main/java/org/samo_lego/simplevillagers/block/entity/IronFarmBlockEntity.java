@@ -138,7 +138,7 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
             // Check first 3 slots for villagers
             for (int i = 0; i < 3; i++) {
                 final ItemStack stack = this.items.get(i);
-                canOperate &= stack.getItem() == VILLAGER_ITEM && !VillagerUtil.isBaby(stack);
+                canOperate &= stack.getItem() == VILLAGER_ITEM && VillagerUtil.isParent(stack);
             }
 
             // Update only if the status has changed
