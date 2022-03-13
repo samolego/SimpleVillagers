@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "simplevillagers:iron_farm_block",
+    "simplevillagers:converter_block",
     "simplevillagers:breeder_block"
   ]
 }

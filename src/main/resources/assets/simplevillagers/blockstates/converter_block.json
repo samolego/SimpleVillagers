@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "empty=true": {
+      "model": "simplevillagers:block/converter_block_empty"
+    },
+    "empty=false": {
+      "model": "simplevillagers:block/converter_block"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#R#",
+        "iAi"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glass_pane"
+        },
+        "R": {
+            "item": "minecraft:rotten_flesh"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "A": {
+            "item": "minecraft:mossy_cobblestone"
+        }
+    },
+    "result": {
+        "item": "simplevillagers:converter_block",
+        "count": 1
+    }
+}
