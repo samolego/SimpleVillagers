@@ -23,12 +23,12 @@ import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
 public interface VillagerUtil {
     void forceDefaultTradingScreen(boolean force);
 
-    static boolean isBaby(ItemStack stack) {
+    static boolean isParent(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         if (tag != null) {
-            return tag.getInt("Age") < 0;
+            return tag.getInt("Age") >= 0;
         }
-        return false;
+        return true;
     }
 
     static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {

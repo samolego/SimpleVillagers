@@ -44,10 +44,34 @@ public class Config implements IBrigadierConfigurator {
 
 
     @SerializedName("// Age of new baby villagers. Default is 20 minutes to grow up (like in vanilla).")
-    public final String _comment_baby_age = "";
+    public final String _comment_babyAge = "";
     @BrigadierDescription(defaultOption = "-24000")
     @SerializedName("baby_age")
     public int babyAge = -24000;
+
+
+    @SerializedName("// Settings for zombie villager converter (curing).")
+    public final String _comment_converter = "";
+    public Converter converter = new Converter();
+
+    public static class Converter {
+        @SerializedName("// How many ticks does zombie -> villager conversion take.")
+        public final String _comment_time = "";
+        @SerializedName("time")
+        public int time = 6000;
+
+        @SerializedName("// Whether players must be online when conversion finishes to get discounts.")
+        public final String _comment_requiresOnlinePlayer0 = "";
+        @SerializedName("// Vanilla acts strangely here as it defaults to true, but that doesn't make much sense.")
+        public final String _comment_requiresOnlinePlayer1 = "";
+        @SerializedName("requires_player_be_online")
+        public boolean requiresOnlinePlayer = false;
+
+        @SerializedName("// Whether to require *splash* potion of weakness.")
+        public final String _comment_requireSplash = "";
+        @SerializedName("require_splash_potion_type")
+        public boolean requireSplash = true;
+    }
 
 
     /**
