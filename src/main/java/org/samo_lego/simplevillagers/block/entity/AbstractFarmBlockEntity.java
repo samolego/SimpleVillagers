@@ -150,11 +150,11 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
     /**
      * Grows baby villagers inside the farm.
      * @param startIndex the index of the first villager to grow. Looks until the end of the item list.
-     * @param ageIncrease how many ticks should the age be increased by.
+     * @param endIndex the index of the last villager to grow, exclusive.
+     * @param ageStep how many ticks should the age be increased by.
      */
-    public void growBabies(int startIndex, int ageIncrease) {
-        int size = this.getItems().size();
-        for (int i = startIndex; i < size; i++) {
+    public void growBabies(int startIndex, int endIndex, int ageStep) {
+        for (int i = startIndex; i < endIndex; i++) {
             final ItemStack stack = this.getItems().get(i);
 
             final CompoundTag tag = stack.getTag();
@@ -162,9 +162,10 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
             if (tag != null && tag.contains("Age")) {
                 int age = tag.getInt("Age");
 
-                age += ageIncrease;
+                age += ageStep;
                 if (age >= 0) {
                     tag.remove("Age");
+                    tag.remove(ItemStack.TAG_DISPLAY);
                 } else {
                     tag.putInt("Age", age);
                 }
@@ -173,6 +174,6 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
     }
 
     public void growBabies(int startIndex) {
-        this.growBabies(startIndex, 1);
+        this.growBabies(startIndex,this.getContainerSize(), 1);
     }
 }
