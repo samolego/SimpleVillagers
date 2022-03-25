@@ -145,4 +145,34 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
     protected void setOperative(boolean operative) {
         this.canOperate = operative;
     }
+
+
+    /**
+     * Grows baby villagers inside the farm.
+     * @param startIndex the index of the first villager to grow. Looks until the end of the item list.
+     * @param ageIncrease how many ticks should the age be increased by.
+     */
+    public void growBabies(int startIndex, int ageIncrease) {
+        int size = this.getItems().size();
+        for (int i = startIndex; i < size; i++) {
+            final ItemStack stack = this.getItems().get(i);
+
+            final CompoundTag tag = stack.getTag();
+
+            if (tag != null && tag.contains("Age")) {
+                int age = tag.getInt("Age");
+
+                age += ageIncrease;
+                if (age >= 0) {
+                    tag.remove("Age");
+                } else {
+                    tag.putInt("Age", age);
+                }
+            }
+        }
+    }
+
+    public void growBabies(int startIndex) {
+        this.growBabies(startIndex, 1);
+    }
 }

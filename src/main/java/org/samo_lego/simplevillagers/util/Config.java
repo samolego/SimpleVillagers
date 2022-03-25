@@ -49,6 +49,10 @@ public class Config implements IBrigadierConfigurator {
     @SerializedName("baby_age")
     public int babyAge = -24000;
 
+    @SerializedName("// How much should age be increased by each tick in *incubator* block. Vanilla would be 1.")
+    public final String _comment_babyAgeIncrease = "";
+    @SerializedName("baby_age_increase")
+    public int babyAgeIncrease = 2;
 
     @SerializedName("// Settings for zombie villager converter (curing).")
     public final String _comment_converter = "";
