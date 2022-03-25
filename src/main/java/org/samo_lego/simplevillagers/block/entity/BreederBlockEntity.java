@@ -50,8 +50,8 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void serverTick() {
         // Baby villagers
+        this.growBabies(this.getItems().size() - 4);
 
-        this.growBabies();
         // Every 5 minutes => 20 ticks * 60 seconds * 5 minutes = 6000 ticks
         if (this.canOperate() && this.foodReserves >= BREEDING_FOOD_THRESHOLD && this.tickCount % CONFIG.breedingTimer == 0) {
             this.tickCount = 0;
@@ -113,23 +113,6 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
             }
         }
         this.foodReserves -= BREEDING_FOOD_THRESHOLD;
-    }
-
-    private void growBabies() {
-        int size = this.getItems().size();
-        for (int i = size - 4; i < size; i++) {
-            final ItemStack stack = this.items.get(i);
-            final CompoundTag tag = stack.getTag();
-
-            if (tag != null && tag.contains("Age")) {
-                int age = tag.getInt("Age");
-                if (++age >= 0) {
-                    tag.remove("Age");
-                } else {
-                    tag.putInt("Age", age);
-                }
-            }
-        }
     }
 
     @Override

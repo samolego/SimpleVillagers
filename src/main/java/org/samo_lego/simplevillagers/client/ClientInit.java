@@ -8,6 +8,7 @@ import org.samo_lego.simplevillagers.network.NetworkHandler;
 
 import static org.samo_lego.simplevillagers.SimpleVillagers.BREEDER_BLOCK;
 import static org.samo_lego.simplevillagers.SimpleVillagers.CONVERTER_BLOCK;
+import static org.samo_lego.simplevillagers.SimpleVillagers.INCUBATOR_BLOCK;
 import static org.samo_lego.simplevillagers.SimpleVillagers.IRON_FARM_BLOCK;
 
 public class ClientInit implements ClientModInitializer {
@@ -17,5 +18,6 @@ public class ClientInit implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(IRON_FARM_BLOCK, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BREEDER_BLOCK, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CONVERTER_BLOCK, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(INCUBATOR_BLOCK, RenderType.cutout());
     }
 }
