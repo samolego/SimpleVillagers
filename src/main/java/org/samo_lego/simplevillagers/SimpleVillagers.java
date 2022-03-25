@@ -63,7 +63,7 @@ public class SimpleVillagers implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Loading SimpleVillagers ...");
+		LOGGER.info("Hrmpf! Loading SimpleVillagers ...");
 
 		configFile = new File(FabricLoader.getInstance().getConfigDir() + "/simplevillagers.json");
 		CONFIG = Config.loadConfigFile(configFile);

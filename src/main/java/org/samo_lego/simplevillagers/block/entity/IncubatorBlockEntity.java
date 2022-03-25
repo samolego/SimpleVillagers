@@ -36,7 +36,7 @@ public class IncubatorBlockEntity extends AbstractFarmBlockEntity {
     public void serverTick() {
         // Baby villagers
         if (this.canOperate())
-            this.growBabies(0, CONFIG.babyAgeIncrease);
+            this.growBabies(0, this.getContainerSize(), CONFIG.babyAgeIncrease);
     }
 
     @Override
