@@ -68,7 +68,7 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
                     this.decreaseFoodReserves();
 
                     // Spawn particles
-                    ((ServerLevel)this.level).sendParticles(ParticleTypes.HEART, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 1, 0, 0, 0, 0.1);
+                    ((ServerLevel) this.level).sendParticles(ParticleTypes.HEART, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 1, 0, 0, 0, 0.1);
 
 
                     // Create baby villager item stack
