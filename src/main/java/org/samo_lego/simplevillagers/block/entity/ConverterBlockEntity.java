@@ -5,10 +5,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -55,6 +57,7 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
             this.tickCount = 0;
 
             this.level.playSound(null, this.getBlockPos(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.HOSTILE, 1.0F, 1.0F);
+            ((ServerLevel) this.level).sendParticles(ParticleTypes.ANGRY_VILLAGER, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 1, 0, 0, 0, 0.1);
 
             // Clear items
             for (int i = 0; i < this.getContainerSize() - 1; i++) {
@@ -87,6 +90,7 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
             this.setItem(3, stack);
 
             this.level.levelEvent(null, 1027, this.getBlockPos(), 0);
+            ((ServerLevel) this.level).sendParticles(ParticleTypes.HAPPY_VILLAGER, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 1, 0, 0, 0, 0.1);
 
             this.converting = false;
         }

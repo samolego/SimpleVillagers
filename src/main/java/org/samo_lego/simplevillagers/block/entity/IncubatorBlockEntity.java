@@ -3,9 +3,11 @@ package org.samo_lego.simplevillagers.block.entity;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
@@ -35,8 +37,19 @@ public class IncubatorBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void serverTick() {
         // Baby villagers
-        if (this.canOperate())
+        if (this.canOperate()) {
             this.growBabies(0, this.getContainerSize(), CONFIG.babyAgeIncrease);
+
+            for (int i = 0; i < this.getContainerSize() && this.canOperate(); ++i) {
+                this.updateEmptyStatus(i);
+            }
+
+            if (!this.canOperate()) {
+                // Baby has grown to adult
+                ((ServerLevel) this.level).sendParticles(ParticleTypes.END_ROD, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 1, 0, 0, 0, 0.1);
+            }
+
+        }
     }
 
     @Override
