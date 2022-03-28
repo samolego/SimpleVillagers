@@ -29,7 +29,7 @@ Don't worry, even though you get a villager item that looks like spawn egg, it a
 * Breeder block
     * 1 baby villager item / 5 minutes
     * <details>
-      <summary>Images</summary>
+      <summary>Recipe</summary>
       <br>
          <img src="https://user-images.githubusercontent.com/34912839/156937230-259415e2-cb94-40ea-abba-b2cf8c409942.png" />
 
@@ -41,7 +41,7 @@ Don't worry, even though you get a villager item that looks like spawn egg, it a
 * Iron Farm Block
     * Summons golem every 4 minutes.
     * <details>
-      <summary>Images</summary>
+      <summary>Recipe</summary>
       <br>
          <img src="https://user-images.githubusercontent.com/34912839/156937202-6748d561-7aaf-4b29-9ebe-650528f407b3.png" />
 
