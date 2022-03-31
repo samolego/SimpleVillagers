@@ -1,43 +1,11 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "By samo_lego. Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "entity/zombie/zombie",
 		"2": "block/glass",
 		"3": "block/mossy_cobblestone",
 		"particle": "block/glass"
-	},
-	"display": {
-		"gui": {
-			"rotation": [ 30, 225, 0 ],
-			"translation": [ 0, 0, 0],
-			"scale":[ 0.625, 0.625, 0.625 ]
-		},
-		"ground": {
-			"rotation": [ 0, 0, 0 ],
-			"translation": [ 0, 3, 0],
-			"scale":[ 0.25, 0.25, 0.25 ]
-		},
-		"fixed": {
-			"rotation": [ 0, 0, 0 ],
-			"translation": [ 0, 0, 0],
-			"scale":[ 0.5, 0.5, 0.5 ]
-		},
-		"thirdperson_righthand": {
-			"rotation": [ 75, 45, 0 ],
-			"translation": [ 0, 2.5, 0],
-			"scale": [ 0.375, 0.375, 0.375 ]
-		},
-		"firstperson_righthand": {
-			"rotation": [ 0, 45, 0 ],
-			"translation": [ 0, 0, 0 ],
-			"scale": [ 0.40, 0.40, 0.40 ]
-		},
-		"firstperson_lefthand": {
-			"rotation": [ 0, 225, 0 ],
-			"translation": [ 0, 0, 0 ],
-			"scale": [ 0.40, 0.40, 0.40 ]
-		}
 	},
 	"elements": [
 		{
@@ -67,9 +35,9 @@
 		},
 		{
 			"name": "body",
-			"from": [12.5, 4, 7],
-			"to": [13.5, 7, 9],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 18, 4]},
+			"from": [10.965, 5.64, 6.63],
+			"to": [12.495, 10.23, 9.69],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14.82, 6.12]},
 			"faces": {
 				"north": {"uv": [4, 5, 5, 8], "texture": "#0"},
 				"east": {"uv": [8, 5, 10, 8], "texture": "#0"},
@@ -81,9 +49,9 @@
 		},
 		{
 			"name": "head",
-			"from": [12, 7, 7],
-			"to": [14, 9, 9],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 18, 0]},
+			"from": [10.2, 10.23, 6.63],
+			"to": [13.26, 13.29, 9.69],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14.82, 0]},
 			"faces": {
 				"north": {"uv": [0, 2, 2, 4], "texture": "#0"},
 				"east": {"uv": [6, 2, 8, 4], "texture": "#0"},
@@ -95,9 +63,9 @@
 		},
 		{
 			"name": "hat",
-			"from": [11.875, 6.875, 6.875],
-			"to": [14.125, 9.125, 9.125],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 18, 0]},
+			"from": [10.00875, 10.03875, 6.43875],
+			"to": [13.45125, 13.48125, 9.88125],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14.82, 0]},
 			"faces": {
 				"north": {"uv": [8, 2, 10, 4], "texture": "#0"},
 				"east": {"uv": [14, 2, 16, 4], "texture": "#0"},
@@ -109,9 +77,9 @@
 		},
 		{
 			"name": "rightArm",
-			"from": [10.5, 5.8, 6],
-			"to": [13.5, 6.8, 7],
-			"rotation": {"angle": 0, "axis": "z", "origin": [0, 18, 0]},
+			"from": [4.905, 4.6, 5.1],
+			"to": [9.495, 6.13, 6.63],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [0, 14.82, 0]},
 			"faces": {
 				"north": {"uv": [10, 5, 11, 8], "rotation": 270, "texture": "#0"},
 				"east": {"uv": [12, 5, 11, 4], "texture": "#0"},
@@ -123,10 +91,10 @@
 		},
 		{
 			"name": "leftArm",
-			"from": [10.5, 5.8, 9],
-			"to": [13.5, 6.8, 10],
+			"from": [4.905, 4.6, 9.69],
+			"to": [9.495, 6.13, 11.22],
 			"shade": false,
-			"rotation": {"angle": 0, "axis": "z", "origin": [0, 18, 0]},
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [0, 14.82, 0]},
 			"faces": {
 				"north": {"uv": [13, 5, 12, 8], "rotation": 270, "texture": "#0"},
 				"east": {"uv": [11, 5, 12, 4], "texture": "#0"},
@@ -138,9 +106,9 @@
 		},
 		{
 			"name": "rightLeg",
-			"from": [12.5, 1, 7.025],
-			"to": [13.5, 4, 8.025],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 18, 0]},
+			"from": [10.965, 1.05, 6.66825],
+			"to": [12.495, 5.64, 8.19825],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14.82, 0]},
 			"faces": {
 				"north": {"uv": [0, 5, 1, 8], "texture": "#0"},
 				"east": {"uv": [3, 5, 4, 8], "texture": "#0"},
@@ -152,10 +120,10 @@
 		},
 		{
 			"name": "leftLeg",
-			"from": [12.5, 1, 7.975],
-			"to": [13.5, 4, 8.975],
+			"from": [10.965, 1.05, 8.12175],
+			"to": [12.495, 5.64, 9.65175],
 			"shade": false,
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 18, 0]},
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 14.82, 0]},
 			"faces": {
 				"north": {"uv": [3, 5, 2, 8], "texture": "#0"},
 				"east": {"uv": [4, 5, 3, 8], "texture": "#0"},
@@ -166,6 +134,32 @@
 			}
 		}
 	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
 	"groups": [
 		{
 			"name": "block",
@@ -177,7 +171,8 @@
 			"name": "zombie",
 			"origin": [0, 24, 0],
 			"color": 0,
-			"children": [2,
+			"children": [
+				2,
 				{
 					"name": "head",
 					"origin": [0, 24, 0],
