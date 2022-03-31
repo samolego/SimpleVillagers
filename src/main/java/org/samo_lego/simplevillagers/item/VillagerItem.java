@@ -17,7 +17,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -30,9 +29,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 
@@ -79,12 +77,15 @@ public class VillagerItem extends SimplePolymerItem {
         final Direction direction = context.getClickedFace();
         final BlockState blockState = level.getBlockState(clickedPos);
 
-        final BlockPos blockPos2 = blockState.getCollisionShape(level, clickedPos).isEmpty() ? clickedPos : clickedPos.relative(direction);
+        final BlockPos pos = blockState.getCollisionShape(level, clickedPos).isEmpty() ? clickedPos : clickedPos.relative(direction);
 
-        final Entity villager = EntityType.VILLAGER.spawn(world, handStack, player, blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(clickedPos, blockPos2) && direction == Direction.UP);
+        final Entity villager = EntityType.VILLAGER.create(world);
 
         if (villager != null) {
-            this.loadVillager(villager, handStack);
+            loadVillager(villager, handStack);
+            villager.setPos(Vec3.atCenterOf(pos));
+            world.addFreshEntity(villager);
+
             handStack.shrink(1);
             level.gameEvent(player, GameEvent.ENTITY_PLACE, clickedPos);
         }
@@ -115,12 +116,15 @@ public class VillagerItem extends SimplePolymerItem {
             return InteractionResultHolder.fail(handStack);
         }
 
-        final Entity villager = EntityType.VILLAGER.spawn((ServerLevel) level, handStack, player, blockPos, MobSpawnType.SPAWN_EGG, false, false);
+        final Entity villager = EntityType.VILLAGER.create(level);
         if (villager == null) {
             return InteractionResultHolder.pass(handStack);
         }
 
-        this.loadVillager(villager, handStack);
+        loadVillager(villager, handStack);
+        villager.setPos(Vec3.atCenterOf(blockPos));
+
+        level.addFreshEntity(villager);
 
         if (!player.getAbilities().instabuild) {
             handStack.shrink(1);
@@ -132,14 +136,14 @@ public class VillagerItem extends SimplePolymerItem {
         return InteractionResultHolder.consume(handStack);
     }
 
-    private void loadVillager(Entity villager, ItemStack handStack) {
+    public static void loadVillager(Entity villager, ItemStack handStack) {
         final CompoundTag tag = handStack.getOrCreateTag();
-        tag.put("Pos", this.newDoubleList(villager.getX(), villager.getY(), villager.getZ()));
+        tag.put("Pos", newDoubleList(villager.getX(), villager.getY(), villager.getZ()));
 
         villager.load(tag);
     }
 
-    private ListTag newDoubleList(double ... numbers) {
+    private static ListTag newDoubleList(double ... numbers) {
         ListTag listTag = new ListTag();
         for (double d : numbers) {
             listTag.add(DoubleTag.valueOf(d));

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "# #",
+        "iAi"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glass_pane"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "A": {
+            "tag": "minecraft:wool"
+        }
+    },
+    "result": {
+        "item": "simplevillagers:incubator_block",
+        "count": 1
+    }
+}

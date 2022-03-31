@@ -33,12 +33,12 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack itemStack, @Nullable Direction direction) {
-        return direction != Direction.DOWN;
+        return true;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return direction == Direction.DOWN;
+        return true;
     }
 
     @Override
@@ -149,7 +149,7 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
 
     /**
      * Grows baby villagers inside the farm.
-     * @param startIndex the index of the first villager to grow. Looks until the end of the item list.
+     * @param startIndex the index of the first villager to grow.
      * @param endIndex the index of the last villager to grow, exclusive.
      * @param ageStep how many ticks should the age be increased by.
      */
@@ -175,5 +175,8 @@ public abstract class AbstractFarmBlockEntity extends BaseContainerBlockEntity i
 
     public void growBabies(int startIndex) {
         this.growBabies(startIndex,this.getContainerSize(), 1);
+    }
+
+    public void onDestroy(ServerPlayer player) {
     }
 }

@@ -6,9 +6,13 @@
   "container.simplevillagers.breeder": "Villager Breeder",
   "container.simplevillagers.converter": "Villager Converter",
   "container.simplevillagers.converter.converting": "Curing.",
+  "container.simplevillagers.trader": "Trading Station",
   "item.simplevillagers.villager_item": "Picked Villager",
   "block.simplevillagers.iron_farm_block": "Iron Farm Block",
   "block.simplevillagers.breeder_block": "Breeder Block",
+  "block.simplevillagers.converter_block": "Converter Block",
+  "block.simplevillagers.incubator_block": "Incubator Block",
+  "block.simplevillagers.trading_block": "Trading Block",
   "command.simplevilagers.config.reload.success": "Config reloaded successfully.",
   "itemGroup.simplevillagers.general": "Simple Villagers"
 }

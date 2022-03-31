@@ -53,40 +53,43 @@ public interface VillagerUtil {
                 // Remove the villager
                 ((AVillager) villager).callReleaseAllPois();
 
-                if (villager.getVillagerXp() > 0 || villager.isBaby()) {
-                    villager.saveWithoutId(villagerTag);
-                    final CompoundTag brain = villagerTag.getCompound("Brain");
-                    if (!brain.isEmpty()) {
-                        final CompoundTag memories = brain.getCompound("memories");
-
-                        if (!memories.isEmpty()) {
-                            memories.remove("minecraft:job_site");
-                        }
-                    }
-
-                    villagerTag.remove("Pos");
-                    villagerTag.remove("Motion");
-                    villagerTag.remove("Rotation");
-                    villagerTag.remove("UUID");
-                    villagerTag.remove("Dimension");
-
-                    if (villager.isBaby()) {
-                        final CompoundTag loreTag = new CompoundTag();
-                        final ListTag nbtLore = new ListTag();
-                        nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent("Baby"))));
-                        loreTag.put(ItemStack.TAG_LORE, nbtLore);
-
-                        villagerTag.put(ItemStack.TAG_DISPLAY, loreTag);
-                    }
-
-                    stack.setTag(villagerTag);
-                }
-
-
+                saveVillager(villager, stack, true);
                 villager.discard();
             }
         }
 
         return InteractionResult.PASS;
+    }
+
+    static void saveVillager(Villager villager, ItemStack stack, boolean removeJobSite) {
+        final CompoundTag villagerTag = new CompoundTag();
+        if (villager.getVillagerXp() > 0 || villager.isBaby()) {
+            villager.saveWithoutId(villagerTag);
+            final CompoundTag brain = villagerTag.getCompound("Brain");
+            if (!brain.isEmpty() && removeJobSite) {
+                final CompoundTag memories = brain.getCompound("memories");
+
+                if (!memories.isEmpty()) {
+                    memories.remove("minecraft:job_site");
+                }
+            }
+
+            villagerTag.remove("Pos");
+            villagerTag.remove("Motion");
+            villagerTag.remove("Rotation");
+            villagerTag.remove("UUID");
+            villagerTag.remove("Dimension");
+
+            if (villager.isBaby()) {
+                final CompoundTag loreTag = new CompoundTag();
+                final ListTag nbtLore = new ListTag();
+                nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent("Baby"))));
+                loreTag.put(ItemStack.TAG_LORE, nbtLore);
+
+                villagerTag.put(ItemStack.TAG_DISPLAY, loreTag);
+            }
+
+            stack.setTag(villagerTag);
+        }
     }
 }

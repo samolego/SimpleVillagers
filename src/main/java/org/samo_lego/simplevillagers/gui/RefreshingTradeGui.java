@@ -65,11 +65,10 @@ public class RefreshingTradeGui extends MerchantGui {
     }
 
     private void rerollTrades(int i, ClickType clickType, net.minecraft.world.inventory.ClickType clickType1) {
-        final MerchantOffers newTrades = this.villager.getOffers();
-        newTrades.clear();
+        this.villager.getOffers().clear();
         ((AVillager) this.villager).callUpdateTrades();
 
-        this.merchant.overrideOffers(newTrades);
+        //this.merchant.overrideOffers(newTrades);
         this.updateLore();
 
         this.sendUpdate();
