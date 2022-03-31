@@ -82,7 +82,7 @@ public abstract class AbstractFarmBlock extends BaseEntityBlock implements Polym
             farmBlockEntity.onUse(player);
         }
 
-        return pl.isShiftKeyDown() ? InteractionResult.PASS : InteractionResult.SUCCESS;
+        return pl.isShiftKeyDown() && !pl.getMainHandItem().isEmpty() ? InteractionResult.PASS : InteractionResult.SUCCESS;
     }
 
     @Override
@@ -107,6 +107,13 @@ public abstract class AbstractFarmBlock extends BaseEntityBlock implements Polym
     @Override
     public Block getPolymerBlock(ServerPlayer player, BlockState state) {
         return isVanilla(player) ? this.getPolymerBlock(state) : state.getBlock();
+    }
+
+    public static boolean onDestroy(Level level, Player player, BlockPos blockPos, BlockState state, BlockEntity blockEntity) {
+        if (blockEntity instanceof AbstractFarmBlockEntity farmBlockEntity && player instanceof ServerPlayer pl) {
+            farmBlockEntity.onDestroy(pl);
+        }
+        return true;
     }
 }
 

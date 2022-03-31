@@ -4,7 +4,8 @@
     "simplevillagers:iron_farm_block",
     "simplevillagers:converter_block",
     "simplevillagers:incubator_block",
-    "simplevillagers:breeder_block"
+    "simplevillagers:breeder_block",
+    "simplevillagers:trading_block"
   ]
 }
 

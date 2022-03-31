@@ -4,6 +4,7 @@ import eu.pb4.polymer.api.block.PolymerBlockUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -17,14 +18,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Material;
+import org.samo_lego.simplevillagers.block.AbstractFarmBlock;
 import org.samo_lego.simplevillagers.block.BreederBlock;
 import org.samo_lego.simplevillagers.block.ConverterBlock;
 import org.samo_lego.simplevillagers.block.IncubatorBlock;
 import org.samo_lego.simplevillagers.block.IronFarmBlock;
+import org.samo_lego.simplevillagers.block.TradingBlock;
 import org.samo_lego.simplevillagers.block.entity.BreederBlockEntity;
 import org.samo_lego.simplevillagers.block.entity.ConverterBlockEntity;
 import org.samo_lego.simplevillagers.block.entity.IncubatorBlockEntity;
 import org.samo_lego.simplevillagers.block.entity.IronFarmBlockEntity;
+import org.samo_lego.simplevillagers.block.entity.TradingBlockEntity;
 import org.samo_lego.simplevillagers.command.SimpleVillagersCommand;
 import org.samo_lego.simplevillagers.item.FarmBlockItem;
 import org.samo_lego.simplevillagers.item.VillagerItem;
@@ -58,6 +62,9 @@ public class SimpleVillagers implements ModInitializer {
 	public static final IncubatorBlock INCUBATOR_BLOCK = new IncubatorBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(2.0f).nonOpaque());
 	public static BlockEntityType<IncubatorBlockEntity> INCUBATOR_BLOCK_ENTITY;
 
+	public static final TradingBlock TRADING_BLOCK = new TradingBlock(FabricBlockSettings.of(Material.BUILDABLE_GLASS).strength(2.0f).nonOpaque());
+	public static BlockEntityType<TradingBlockEntity> TRADING_BLOCK_ENTITY;
+
 	private static File configFile;
 	public static Config CONFIG;
 
@@ -69,6 +76,7 @@ public class SimpleVillagers implements ModInitializer {
 		CONFIG = Config.loadConfigFile(configFile);
 
 		UseEntityCallback.EVENT.register(VillagerUtil::onUseEntity);
+		PlayerBlockBreakEvents.BEFORE.register(AbstractFarmBlock::onDestroy);
 		Registry.register(Registry.ITEM, VillagerItem.ID, VILLAGER_ITEM);
 
 
@@ -96,7 +104,17 @@ public class SimpleVillagers implements ModInitializer {
 				FabricBlockEntityTypeBuilder.create(IncubatorBlockEntity::new, INCUBATOR_BLOCK).build(null));
 
 
-		PolymerBlockUtils.registerBlockEntity(IRON_FARM_BLOCK_ENTITY, BREEDER_BLOCK_ENTITY, CONVERTER_BLOCK_ENTITY, INCUBATOR_BLOCK_ENTITY);
+		Registry.register(Registry.ITEM, TradingBlock.ID, new FarmBlockItem(TRADING_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.ORANGE_STAINED_GLASS));
+		Registry.register(Registry.BLOCK, TradingBlock.ID, TRADING_BLOCK);
+		TRADING_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, TradingBlockEntity.ID,
+				FabricBlockEntityTypeBuilder.create(TradingBlockEntity::new, TRADING_BLOCK).build(null));
+
+
+		PolymerBlockUtils.registerBlockEntity(IRON_FARM_BLOCK_ENTITY,
+				BREEDER_BLOCK_ENTITY,
+				CONVERTER_BLOCK_ENTITY,
+				INCUBATOR_BLOCK_ENTITY,
+				TRADING_BLOCK_ENTITY);
 
 		CommandRegistrationCallback.EVENT.register(SimpleVillagersCommand::register);
 	}

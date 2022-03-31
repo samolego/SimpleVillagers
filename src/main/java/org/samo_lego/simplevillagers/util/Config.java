@@ -77,6 +77,18 @@ public class Config implements IBrigadierConfigurator {
         public boolean requireSplash = true;
     }
 
+    public Restock restock = new Restock();
+
+    public static class Restock {
+        @SerializedName("// How many ticks must pass between each restocking.")
+        public final String _comment_timer = "";
+        public int timer = 6000;
+        @SerializedName("How many times per day restocking can occur.")
+        public String _maxAmount = "";
+        public int maxAmount = 2;
+        public int minWaitTime = 12000;
+    }
+
 
     /**
      * Loads config file.

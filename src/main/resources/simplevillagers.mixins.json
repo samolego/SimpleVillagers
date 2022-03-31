@@ -4,6 +4,7 @@
   "package": "org.samo_lego.simplevillagers.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "APoiType",
     "AVillager",
     "VillagerMixin"
   ],
