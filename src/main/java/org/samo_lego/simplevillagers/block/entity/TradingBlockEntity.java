@@ -65,7 +65,6 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
                             this.villager.getVillagerXp(),
                             this.villager.showProgressBar(),
                             this.villager.canRestock());
-                    pl.containerMenu.broadcastChanges();
                 }
 
                 ((AVillager) this.villager).callIncreaseMerchantCareer();
@@ -114,9 +113,8 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     protected void updateEmptyStatus(int index) {
-        boolean canOperate;
         final ItemStack stack = this.items.get(0);
-        canOperate = stack.getItem() == VILLAGER_ITEM && VillagerUtil.isParent(stack);
+        boolean canOperate = stack.getItem() == VILLAGER_ITEM && VillagerUtil.isParent(stack);
 
         // Change profession
         final ItemStack profBlock = this.items.get(1);
@@ -148,9 +146,8 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
         final var profession = data.getProfession();
 
         if (profession == VillagerProfession.NONE) {
-            data.setProfession(this.activeProfession);
-            if (data.getLevel() <= 1)
-                ((AVillager) this.villager).callIncreaseMerchantCareer();
+            this.villager.setVillagerData(data.setProfession(this.activeProfession));
+
         } else if (profession != this.activeProfession) {
             this.setOperative(false);
         }
@@ -166,11 +163,21 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
 
             if (stack.getItem() == VILLAGER_ITEM) {
                 VillagerUtil.saveVillager(this.villager, stack, false);
+                System.out.println(villager.getVillagerXp());
                 this.setOperative(false);
                 this.villager = null;
             }
         }
         return super.removeItem(index, count);
+    }
+
+
+    @Override
+    public void setItem(int index, ItemStack stack) {
+        if (index == 0 && stack.getItem() != VILLAGER_ITEM) {
+            this.setOperative(false);
+        }
+        super.setItem(index, stack);
     }
 
     @Override
