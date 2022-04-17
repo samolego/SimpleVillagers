@@ -104,7 +104,7 @@ public class SimpleVillagers implements ModInitializer {
 				FabricBlockEntityTypeBuilder.create(IncubatorBlockEntity::new, INCUBATOR_BLOCK).build(null));
 
 
-		Registry.register(Registry.ITEM, TradingBlock.ID, new FarmBlockItem(TRADING_BLOCK, new FabricItemSettings().group(VILLAGER_GROUP), Items.ORANGE_STAINED_GLASS));
+		Registry.register(Registry.ITEM, TradingBlock.ID, new FarmBlockItem(TRADING_BLOCK, new FabricItemSettings()/*.group(VILLAGER_GROUP)*/, Items.ORANGE_STAINED_GLASS));
 		Registry.register(Registry.BLOCK, TradingBlock.ID, TRADING_BLOCK);
 		TRADING_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, TradingBlockEntity.ID,
 				FabricBlockEntityTypeBuilder.create(TradingBlockEntity::new, TRADING_BLOCK).build(null));
