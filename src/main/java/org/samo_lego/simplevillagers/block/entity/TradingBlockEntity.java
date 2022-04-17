@@ -157,7 +157,7 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
     public ItemStack removeItem(int index, int count) {
         if (index == 0 && count > 0 && this.villager != null) {
             if (this.villager.isTrading())
-                return ItemStack.EMPTY;
+                this.villager.setTradingPlayer(null);
 
             ItemStack stack = this.items.get(0);
 
@@ -174,8 +174,17 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     public void setItem(int index, ItemStack stack) {
-        if (index == 0 && stack.getItem() != VILLAGER_ITEM) {
-            this.setOperative(false);
+        if (index == 0 && this.villager != null && stack.isEmpty()) {
+            if (this.villager.isTrading())
+                this.villager.setTradingPlayer(null);
+
+            final var itemStack = this.items.get(0);
+
+            if (itemStack.getItem() == VILLAGER_ITEM) {
+                VillagerUtil.saveVillager(this.villager, itemStack, false);
+                System.out.println(villager.getVillagerXp());
+                this.villager = null;
+            }
         }
         super.setItem(index, stack);
     }
