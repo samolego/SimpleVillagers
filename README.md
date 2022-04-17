@@ -35,6 +35,28 @@ Don't worry, even though you get a villager item that looks like spawn egg, it a
 
          <img src="https://user-images.githubusercontent.com/34912839/156937311-7d3f66c6-b8c1-4bdd-ab3a-e88c330c5dda.png" />
       </details>
+      
+* Incubator block
+    * Grows baby vilagers faster (configurable)
+    * <details>
+      <summary>Recipe</summary>
+      <br>
+         (Any type of wool can be used)
+         <img src="https://user-images.githubusercontent.com/34912839/163707340-486f19b9-a12f-4f0f-a8cc-33fe2d259cc5.png" />
+
+         <img src="https://user-images.githubusercontent.com/34912839/163707089-8187995a-2cc5-4c3b-95bf-2ece85c83ff9.png" />
+      </details>
+            
+* Converter block
+    * Converts villagers to zombies and cures them.
+    * <details>
+      <summary>Recipe</summary>
+      <br>
+         <img src="https://user-images.githubusercontent.com/34912839/163707304-5fa48094-16c0-4fb3-8036-f50dfb7a4526.png" />
+
+         <img src="https://user-images.githubusercontent.com/34912839/163707189-642fd6b5-d480-425b-bc48-cb5931f128ad.png" />
+         <img src="https://user-images.githubusercontent.com/34912839/163707217-1bd9f8e4-0cc6-42b1-a87c-d24dfbced68d.png" />
+      </details>
 
 
 
