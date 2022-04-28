@@ -33,27 +33,21 @@ public interface VillagerUtil {
 
     static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
         if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && Permissions.check(pl, "simplevillagers.villager_item.pickup", true)) {
-            // Get the villager item
             if (villager.isLeashed()) {
                 villager.dropLeash(true, true);
             }
 
+            // Get the villager item
             final ItemStack stack = new ItemStack(VILLAGER_ITEM);
-            final CompoundTag villagerTag = new CompoundTag();
 
-            boolean added = false;
-            if (pl.getMainHandItem().isEmpty()) {
-                pl.setItemInHand(InteractionHand.MAIN_HAND, stack);
-                added = true;
-            } else if (pl.getInventory().add(stack)) {
-                added = true;
-            }
+            int emptySlot = pl.getInventory().getFreeSlot();
 
-            if (added) {
+            if (emptySlot != -1) {
                 // Remove the villager
                 ((AVillager) villager).callReleaseAllPois();
 
                 saveVillager(villager, stack, true);
+                player.getInventory().setItem(emptySlot, stack);
                 villager.discard();
             }
         }
