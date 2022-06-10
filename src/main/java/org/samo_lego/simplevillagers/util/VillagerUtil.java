@@ -32,7 +32,7 @@ public interface VillagerUtil {
     }
 
     static InteractionResult onUseEntity(Player player, Level level, InteractionHand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-        if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && Permissions.check(pl, "simplevillagers.villager_item.pickup", true)) {
+        if (player instanceof ServerPlayer pl && entity instanceof Villager villager && pl.isShiftKeyDown() && (Permissions.check(pl, "simplevillagers.villager_item.pickup", true) && player.mayBuild())) {
             if (villager.isLeashed()) {
                 villager.dropLeash(true, true);
             }
