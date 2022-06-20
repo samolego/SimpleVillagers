@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -77,7 +76,7 @@ public interface VillagerUtil {
             if (villager.isBaby()) {
                 final CompoundTag loreTag = new CompoundTag();
                 final ListTag nbtLore = new ListTag();
-                nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent("Baby"))));
+                nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal("Baby"))));
                 loreTag.put(ItemStack.TAG_LORE, nbtLore);
 
                 villagerTag.put(ItemStack.TAG_DISPLAY, loreTag);

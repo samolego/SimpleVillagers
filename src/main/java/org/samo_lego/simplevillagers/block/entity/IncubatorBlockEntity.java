@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -60,7 +59,7 @@ public class IncubatorBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void onUse(ServerPlayer player) {
         final ItemStack villagerStack = new ItemStack(VILLAGER_ITEM);
-        villagerStack.setHoverName(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
+        villagerStack.setHoverName(Component.translatable(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
         villagerStack.enchant(null, 0);
 
         new VillagerBlockGui(MenuType.GENERIC_9x1, player, this,
@@ -96,7 +95,7 @@ public class IncubatorBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.simplevillagers.incubator");
+        return Component.translatable("container.simplevillagers.incubator");
     }
 
     @Override

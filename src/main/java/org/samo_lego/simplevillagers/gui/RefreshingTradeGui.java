@@ -13,8 +13,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.Villager;
@@ -32,7 +30,7 @@ public class RefreshingTradeGui extends MerchantGui {
 
     private static final ItemStack BARRIER = new ItemStack(Items.BARRIER);
     private static final ItemStack TERACOTTA = new ItemStack(Items.MAGENTA_GLAZED_TERRACOTTA);
-    private static final StringTag LINE = StringTag.valueOf(Component.Serializer.toJson(new TextComponent("---------------")
+    private static final StringTag LINE = StringTag.valueOf(Component.Serializer.toJson(Component.literal("---------------")
             .withStyle(ChatFormatting.GRAY)
             .withStyle(Style.EMPTY.withItalic(false))));
     private final Villager villager;
@@ -85,28 +83,28 @@ public class RefreshingTradeGui extends MerchantGui {
             int aCount = offer.getCostA().getCount();
             final Component aName = offer.getCostA().getHoverName();
 
-            final MutableComponent loreTextA = new TextComponent(aCount + "x ")
+            final MutableComponent loreTextA = Component.literal(aCount + "x ")
                     .withStyle(ChatFormatting.GREEN)
                     .append(aName)
                     .withStyle(Style.EMPTY.withItalic(false));
             nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(loreTextA)));
 
             // B stack
-            final MutableComponent loreText = new TextComponent("");
+            final MutableComponent loreText = Component.literal("");
             final ItemStack costB = offer.getCostB();
             if (!costB.isEmpty()) {
                 int bCount = costB.getCount();
                 final Component bName = costB.getHoverName();
 
-                loreText.append(new TextComponent(bCount + "x ").append(bName).withStyle(ChatFormatting.DARK_GREEN).withStyle(Style.EMPTY.withItalic(false)));
+                loreText.append(Component.literal(bCount + "x ").append(bName).withStyle(ChatFormatting.DARK_GREEN).withStyle(Style.EMPTY.withItalic(false)));
             }
 
             // Result
             final ItemStack result = offer.getResult();
             int resCount = result.getCount();
             final Component resName = result.getHoverName();
-            loreText.append(new TextComponent(" -> ").withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(Style.EMPTY.withItalic(false)))
-                    .append(new TextComponent( resCount + "x ")
+            loreText.append(Component.literal(" -> ").withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(Style.EMPTY.withItalic(false)))
+                    .append(Component.literal( resCount + "x ")
                             .append(resName)
                             .withStyle(ChatFormatting.GOLD)
                             .withStyle(ChatFormatting.BOLD))
@@ -117,14 +115,14 @@ public class RefreshingTradeGui extends MerchantGui {
             final CompoundTag enchantmentTag = result.getTag();
 
             if (enchantmentTag != null && enchantmentTag.contains("StoredEnchantments", 9)) {
-                final MutableComponent enchants = new TextComponent("  + Enchants:")
+                final MutableComponent enchants = Component.literal("  + Enchants:")
                         .withStyle(Style.EMPTY.withItalic(false))
                         .withStyle(ChatFormatting.GRAY);
                 nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(enchants)));
 
                 for (Tag tag : enchantmentTag.getList("StoredEnchantments", 10)) {
                     final CompoundTag enchantTag = (CompoundTag) tag;
-                    final MutableComponent txt = new TextComponent("    - ").withStyle(ChatFormatting.DARK_PURPLE);
+                    final MutableComponent txt = Component.literal("    - ").withStyle(ChatFormatting.DARK_PURPLE);
 
                     final ResourceLocation id = new ResourceLocation(enchantTag.getString("id"));
                     short lvl = enchantTag.getShort("lvl");
@@ -137,10 +135,10 @@ public class RefreshingTradeGui extends MerchantGui {
                                     ChatFormatting.AQUA :
                                     ChatFormatting.DARK_PURPLE;
 
-                    txt.append(new TranslatableComponent(enchantment.getDescriptionId()).withStyle(color));
+                    txt.append(Component.translatable(enchantment.getDescriptionId()).withStyle(color));
 
                     if (lvl > 1) {
-                        txt.append(new TextComponent(" " + lvl).withStyle(max ? ChatFormatting.BLUE : ChatFormatting.LIGHT_PURPLE));
+                        txt.append(Component.literal(" " + lvl).withStyle(max ? ChatFormatting.BLUE : ChatFormatting.LIGHT_PURPLE));
                     }
                     nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(txt)));
                 }
@@ -184,7 +182,7 @@ public class RefreshingTradeGui extends MerchantGui {
     }
 
     static {
-        BARRIER.setHoverName(new TranslatableComponent("simplevillagers.hide_buttons"));
-        TERACOTTA.setHoverName(new TranslatableComponent("simplevillagers.reroll_trades"));
+        BARRIER.setHoverName(Component.translatable("simplevillagers.hide_buttons"));
+        TERACOTTA.setHoverName(Component.translatable("simplevillagers.reroll_trades"));
     }
 }

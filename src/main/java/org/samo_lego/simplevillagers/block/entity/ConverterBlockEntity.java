@@ -8,7 +8,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -104,16 +103,16 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void onUse(ServerPlayer player) {
         final ItemStack villagerStack = new ItemStack(VILLAGER_ITEM);
-        villagerStack.setHoverName(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
+        villagerStack.setHoverName(Component.translatable(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
         villagerStack.enchant(null, 0);
 
         final ItemStack gappleStack = new ItemStack(Items.GOLDEN_APPLE);
-        gappleStack.setHoverName(new TranslatableComponent(gappleStack.getDescriptionId()).append(" ->"));
+        gappleStack.setHoverName(Component.translatable(gappleStack.getDescriptionId()).append(" ->"));
         gappleStack.enchant(null, 0);
 
 
         final ItemStack potionStack = new ItemStack(Items.SPLASH_POTION);
-        potionStack.setHoverName(new TranslatableComponent("item.minecraft.potion.effect.weakness").append(" ->"));
+        potionStack.setHoverName(Component.translatable("item.minecraft.potion.effect.weakness").append(" ->"));
         potionStack.enchant(null, 0);
 
         new VillagerBlockGui(MenuType.GENERIC_9x1, player, this,
@@ -183,10 +182,10 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        final var name =  new TranslatableComponent("container.simplevillagers.converter");
+        final var name =  Component.translatable("container.simplevillagers.converter");
 
         if (this.converting) {
-                name.append(". ").append(new TranslatableComponent("container.simplevillagers.converter.converting").withStyle(ChatFormatting.ITALIC));
+                name.append(". ").append(Component.translatable("container.simplevillagers.converter.converting").withStyle(ChatFormatting.ITALIC));
         }
         return name;
     }

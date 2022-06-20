@@ -8,7 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
@@ -52,7 +51,7 @@ public class VillagerItem extends SimplePolymerItem {
                 return Component.Serializer.fromJson(customName);
             } else if (tag.contains("VillagerData")) {
                 final ResourceLocation id = new ResourceLocation(tag.getCompound("VillagerData").getString("profession"));
-                return new TranslatableComponent(EntityType.VILLAGER.getDescriptionId() + "." + id.getPath());
+                return Component.translatable(EntityType.VILLAGER.getDescriptionId() + "." + id.getPath());
             }
         }
 
@@ -131,7 +130,7 @@ public class VillagerItem extends SimplePolymerItem {
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        level.gameEvent(GameEvent.ENTITY_PLACE, player);
+        level.gameEvent(villager, GameEvent.ENTITY_PLACE, player.position());
 
         return InteractionResultHolder.consume(handStack);
     }

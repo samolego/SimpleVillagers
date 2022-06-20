@@ -8,8 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -79,7 +77,7 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
                     // "Baby" lore
                     final CompoundTag loreTag = new CompoundTag();
                     final ListTag nbtLore = new ListTag();
-                    nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent("Baby"))));
+                    nbtLore.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal("Baby"))));
                     loreTag.put(ItemStack.TAG_LORE, nbtLore);
                     babyTag.put(ItemStack.TAG_DISPLAY, loreTag);
 
@@ -128,11 +126,11 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void onUse(ServerPlayer player) {
         final ItemStack villagerStack = new ItemStack(VILLAGER_ITEM);
-        villagerStack.setHoverName(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
+        villagerStack.setHoverName(Component.translatable(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
         villagerStack.enchant(null, 0);
 
         final ItemStack foodStack = new ItemStack(Items.CARROT);
-        foodStack.setHoverName(new TranslatableComponent("itemGroup.food").append(" ->"));
+        foodStack.setHoverName(Component.translatable("itemGroup.food").append(" ->"));
         foodStack.enchant(null, 0);
 
         new VillagerBlockGui(MenuType.GENERIC_9x2, player, this,
@@ -171,7 +169,7 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.simplevillagers.breeder");
+        return Component.translatable("container.simplevillagers.breeder");
     }
 
     @Override

@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -49,7 +48,7 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.simplevillagers.iron_farm");
+        return Component.translatable("container.simplevillagers.iron_farm");
     }
 
     @Override
@@ -121,11 +120,11 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     @Override
     public void onUse(ServerPlayer player) {
         final ItemStack left = new ItemStack(VILLAGER_ITEM);
-        left.setHoverName(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
+        left.setHoverName(Component.translatable(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
         left.enchant(null, 0);
 
         final ItemStack right = new ItemStack(Items.IRON_INGOT);
-        right.setHoverName(new TranslatableComponent("gamerule.category.drops").append(" ->"));
+        right.setHoverName(Component.translatable("gamerule.category.drops").append(" ->"));
         right.enchant(null, 0);
 
         new VillagerBlockGui(MenuType.GENERIC_9x1, player, this, List.of(Pair.of(left, 3), Pair.of(right, 4)), this::getSlot).open();

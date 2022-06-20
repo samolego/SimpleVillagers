@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
 
 /**
- * Inspired by https://github.com/QuiltServerTools/Interdimensional/blob/master/portals-api/src/main/java/net/quiltservertools/interdimensional/portals/networking/NetworkManager.java
+ * Inspired by <a href="https://github.com/QuiltServerTools/Interdimensional/blob/master/portals-api/src/main/java/net/quiltservertools/interdimensional/portals/networking/NetworkManager.java">Interdimensional</a>
  */
 public class NetworkHandler {
     public static final ResourceLocation SV_HELLO = new ResourceLocation(MOD_ID, "hello");

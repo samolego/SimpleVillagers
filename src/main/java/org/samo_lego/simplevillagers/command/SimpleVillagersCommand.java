@@ -4,14 +4,16 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
 
 import static net.minecraft.commands.Commands.literal;
 import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
 
 public class SimpleVillagersCommand {
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context, Commands.CommandSelection selection) {
         final LiteralCommandNode<CommandSourceStack> config = literal("config")
                 .requires(s -> Permissions.check(s, "simplevillagers.command.config", s.hasPermission(3)))
                 .then(literal("reload")
@@ -37,7 +39,7 @@ public class SimpleVillagersCommand {
 
     private static int reloadConfig(CommandContext<CommandSourceStack> context) {
         CONFIG.reload();
-        context.getSource().sendSuccess(new TranslatableComponent("command.simplevilagers.config.reload.success"), true);
+        context.getSource().sendSuccess(Component.translatable("command.simplevilagers.config.reload.success"), true);
         return 1;
     }
 }

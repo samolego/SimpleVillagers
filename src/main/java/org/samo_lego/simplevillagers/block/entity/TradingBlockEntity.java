@@ -6,14 +6,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.inventory.MenuType;
@@ -30,7 +29,6 @@ import org.samo_lego.simplevillagers.mixin.AVillager;
 import org.samo_lego.simplevillagers.util.VillagerUtil;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
 import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
@@ -96,11 +94,11 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
             player.awardStat(Stats.TALKED_TO_VILLAGER);
         } else {
             final ItemStack left = new ItemStack(VILLAGER_ITEM);
-            left.setHoverName(new TranslatableComponent(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
+            left.setHoverName(Component.translatable(EntityType.VILLAGER.getDescriptionId()).append(" ->"));
             left.enchant(null, 0);
 
             final ItemStack right = new ItemStack(Items.LECTERN);
-            right.setHoverName(new TranslatableComponent("todo").append(" ->"));
+            right.setHoverName(Component.translatable("todo").append(" ->"));
             right.enchant(null, 0);
 
             new VillagerBlockGui(MenuType.GENERIC_9x1, player, this, List.of(Pair.of(left, 1), Pair.of(right, 1)), this::getSlot).open();
@@ -119,9 +117,12 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
         // Change profession
         final ItemStack profBlock = this.items.get(1);
         if (!profBlock.isEmpty() && canOperate) {
-            Optional<PoiType> poiType = PoiType.forState(((BlockItem) profBlock.getItem()).getBlock().defaultBlockState());
+            var poiType = PoiTypes.forState(((BlockItem) profBlock.getItem()).getBlock().defaultBlockState());
             // set villager profession from poi type
-            poiType.ifPresent(type -> this.activeProfession = Registry.VILLAGER_PROFESSION.get(ResourceLocation.tryParse(type.getName())));
+            poiType.flatMap(holder -> Registry.VILLAGER_PROFESSION.stream().filter(villagerProfession ->
+                    villagerProfession.heldJobSite().test(holder)).findFirst()).ifPresent(villagerProfession ->
+                        this.activeProfession = villagerProfession);
+
             canOperate = this.activeProfession != VillagerProfession.NONE;
         } else {
             canOperate = false;
@@ -201,7 +202,7 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container.simplevillagers.trader");
+        return Component.translatable("container.simplevillagers.trader");
     }
 
     @Override
