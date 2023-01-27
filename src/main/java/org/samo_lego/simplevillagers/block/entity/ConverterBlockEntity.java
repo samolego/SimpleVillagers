@@ -4,8 +4,8 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,10 +34,7 @@ import org.samo_lego.simplevillagers.util.VillagerUtil;
 import java.util.List;
 import java.util.UUID;
 
-import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
-import static org.samo_lego.simplevillagers.SimpleVillagers.CONVERTER_BLOCK_ENTITY;
-import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
-import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
+import static org.samo_lego.simplevillagers.SimpleVillagers.*;
 
 public class ConverterBlockEntity extends AbstractFarmBlockEntity {
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "converter_block_entity");
@@ -150,7 +147,7 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
                     potionStack.hasTag()&& VillagerUtil.isParent(villagerStack);
 
             if (canOperate) {
-                final Potion potion = Registry.POTION.get(ResourceLocation.tryParse(potionStack.getTag().getString("Potion")));
+                final Potion potion = BuiltInRegistries.POTION.get(ResourceLocation.tryParse(potionStack.getTag().getString("Potion")));
 
                 canOperate = false;
                 for (MobEffectInstance effect: potion.getEffects()) {

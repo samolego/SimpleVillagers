@@ -1,8 +1,8 @@
 package org.samo_lego.simplevillagers.block;
 
-import eu.pb4.polymer.api.block.PolymerBlock;
-import eu.pb4.polymer.api.client.PolymerClientDecoded;
-import eu.pb4.polymer.api.client.PolymerKeepModel;
+import eu.pb4.polymer.core.api.block.PolymerBlock;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -100,13 +100,8 @@ public abstract class AbstractFarmBlock extends BaseEntityBlock implements Polym
     }
 
     @Override
-    public BlockState getPolymerBlockState(ServerPlayer player, BlockState state) {
-        return isVanilla(player) ? this.getPolymerBlockState(state) : state;
-    }
-
-    @Override
-    public Block getPolymerBlock(ServerPlayer player, BlockState state) {
-        return isVanilla(player) ? this.getPolymerBlock(state) : state.getBlock();
+    public Block getPolymerBlock(BlockState state, ServerPlayer player) {
+        return isVanilla(player) ? this.getPolymerBlockState(state).getBlock() : state.getBlock();
     }
 
     public static boolean onDestroy(Level level, Player player, BlockPos blockPos, BlockState state, BlockEntity blockEntity) {

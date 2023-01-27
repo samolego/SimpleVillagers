@@ -1,6 +1,6 @@
 package org.samo_lego.simplevillagers.item;
 
-import eu.pb4.polymer.api.item.SimplePolymerItem;
+import eu.pb4.polymer.core.api.item.SimplePolymerItem;
 import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,6 +39,7 @@ public class VillagerItem extends SimplePolymerItem {
 
     public VillagerItem(Properties settings) {
         super(settings, Items.VILLAGER_SPAWN_EGG);
+
     }
 
     @Override

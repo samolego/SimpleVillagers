@@ -3,7 +3,7 @@ package org.samo_lego.simplevillagers.block.entity;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -30,10 +30,7 @@ import org.samo_lego.simplevillagers.util.VillagerUtil;
 
 import java.util.List;
 
-import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
-import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
-import static org.samo_lego.simplevillagers.SimpleVillagers.TRADING_BLOCK_ENTITY;
-import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
+import static org.samo_lego.simplevillagers.SimpleVillagers.*;
 import static org.samo_lego.simplevillagers.item.VillagerItem.loadVillager;
 
 public class TradingBlockEntity extends AbstractFarmBlockEntity {
@@ -119,7 +116,7 @@ public class TradingBlockEntity extends AbstractFarmBlockEntity {
         if (!profBlock.isEmpty() && canOperate) {
             var poiType = PoiTypes.forState(((BlockItem) profBlock.getItem()).getBlock().defaultBlockState());
             // set villager profession from poi type
-            poiType.flatMap(holder -> Registry.VILLAGER_PROFESSION.stream().filter(villagerProfession ->
+            poiType.flatMap(holder -> BuiltInRegistries.VILLAGER_PROFESSION.stream().filter(villagerProfession ->
                     villagerProfession.heldJobSite().test(holder)).findFirst()).ifPresent(villagerProfession ->
                         this.activeProfession = villagerProfession);
 

@@ -5,7 +5,7 @@ import eu.pb4.sgui.api.elements.GuiElement;
 import eu.pb4.sgui.api.elements.GuiElementInterface;
 import eu.pb4.sgui.api.gui.MerchantGui;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -127,7 +127,7 @@ public class RefreshingTradeGui extends MerchantGui {
                     final ResourceLocation id = new ResourceLocation(enchantTag.getString("id"));
                     short lvl = enchantTag.getShort("lvl");
 
-                    final Enchantment enchantment = Registry.ENCHANTMENT.get(id);
+                    final Enchantment enchantment = BuiltInRegistries.ENCHANTMENT.get(id);
                     boolean max = enchantment.getMaxLevel() == lvl;
                     final ChatFormatting color = enchantment.isCurse() ?
                             ChatFormatting.RED :
