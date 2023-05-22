@@ -20,17 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Material;
-import org.samo_lego.simplevillagers.block.AbstractFarmBlock;
-import org.samo_lego.simplevillagers.block.BreederBlock;
-import org.samo_lego.simplevillagers.block.ConverterBlock;
-import org.samo_lego.simplevillagers.block.IncubatorBlock;
-import org.samo_lego.simplevillagers.block.IronFarmBlock;
-import org.samo_lego.simplevillagers.block.TradingBlock;
-import org.samo_lego.simplevillagers.block.entity.BreederBlockEntity;
-import org.samo_lego.simplevillagers.block.entity.ConverterBlockEntity;
-import org.samo_lego.simplevillagers.block.entity.IncubatorBlockEntity;
-import org.samo_lego.simplevillagers.block.entity.IronFarmBlockEntity;
-import org.samo_lego.simplevillagers.block.entity.TradingBlockEntity;
+import org.samo_lego.simplevillagers.block.*;
+import org.samo_lego.simplevillagers.block.entity.*;
 import org.samo_lego.simplevillagers.command.SimpleVillagersCommand;
 import org.samo_lego.simplevillagers.item.FarmBlockItem;
 import org.samo_lego.simplevillagers.item.VillagerItem;
@@ -44,7 +35,6 @@ import java.io.File;
 public class SimpleVillagers implements ModInitializer {
 	public static final String MOD_ID = "simplevillagers";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
 
 	public static final CreativeModeTab VILLAGER_GROUP;
 
