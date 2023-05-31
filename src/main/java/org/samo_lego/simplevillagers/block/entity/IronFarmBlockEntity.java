@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +29,7 @@ import org.samo_lego.simplevillagers.util.VillagerUtil;
 import java.util.List;
 import java.util.Optional;
 
-import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
-import static org.samo_lego.simplevillagers.SimpleVillagers.IRON_FARM_BLOCK_ENTITY;
-import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
-import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
+import static org.samo_lego.simplevillagers.SimpleVillagers.*;
 import static org.samo_lego.simplevillagers.block.IronFarmBlock.HAS_GOLEM;
 
 public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
@@ -77,9 +75,10 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
 
     private void produceIron() {
         ResourceLocation resourceLocation = EntityType.IRON_GOLEM.getDefaultLootTable();
-        LootTable lootTable = ((ServerLevel) this.level).getServer().getLootTables().get(resourceLocation);
+        LootTable lootTable = ((ServerLevel) this.level).getServer().getLootData().getLootTable(resourceLocation);
         LootContext.Builder builder = this.createLootContext();
-        lootTable.getRandomItems(builder.create(LootContextParamSets.EMPTY), this::fillIron);
+
+        lootTable.getRandomItems(builder.create(new ResourceLocation(MOD_ID)), this::fillIron);
     }
 
     private void fillIron(ItemStack stack) {
@@ -113,7 +112,7 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
     }
 
     protected LootContext.Builder createLootContext() {
-        return new LootContext.Builder((ServerLevel) this.level);
+        return new LootContext.Builder(new LootParams.Builder((ServerLevel) this.level).create(LootContextParamSets.EMPTY));
     }
 
 

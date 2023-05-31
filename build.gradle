@@ -1,10 +1,8 @@
-import com.modrinth.minotaur.TaskModrinthUpload
-
 plugins {
 	id 'fabric-loom' version '1.1-SNAPSHOT'
 	id 'maven-publish'
 	id 'com.matthewprenger.cursegradle' version '1.4.0'
-	id "com.modrinth.minotaur" version "1.1.0"
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -111,20 +109,22 @@ curseforge {
 	}
 }
 
-task modrinth(type: TaskModrinthUpload, dependsOn: remapJar) {
+tasks.modrinth {
 	onlyIf {
 		ENV.MODRINTH_TOKEN
 	}
+}
 
+modrinth {
 	token = ENV.MODRINTH_TOKEN
 	projectId = "uRSeGBg3"
 	versionNumber = project.minecraft_version + "+" + version
 	changelog = ENV.CHANGELOG ?: "A changelog can be found at https://github.com/samolego/Taterzens/releases/tag/${version}"
 	versionName = "[${project.minecraft_version}] SimpleVillagers ${version}]"
-	releaseType = "release"
+	versionType = "release"
 
 	uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
 
-	addGameVersion("${project.minecraft_version}")
-	addLoader('fabric')
+	gameVersions = [project.minecraft_version]
+	loaders = ["fabric", "quilt"]
 }

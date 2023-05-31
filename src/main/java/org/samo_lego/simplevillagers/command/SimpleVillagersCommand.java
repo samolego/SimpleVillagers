@@ -39,7 +39,7 @@ public class SimpleVillagersCommand {
 
     private static int reloadConfig(CommandContext<CommandSourceStack> context) {
         CONFIG.reload();
-        context.getSource().sendSuccess(Component.translatable("command.simplevilagers.config.reload.success"), true);
+        context.getSource().sendSuccess(() -> Component.translatable("command.simplevilagers.config.reload.success"), true);
         return 1;
     }
 }
