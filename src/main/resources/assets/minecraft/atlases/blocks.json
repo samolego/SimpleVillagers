@@ -1,0 +1,42 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "block",
+      "prefix": "block/"
+    },
+    {
+      "type": "directory",
+      "source": "item",
+      "prefix": "item/"
+    },
+    {
+      "type": "single",
+      "resource": "entity/villager/type/plains"
+    },
+    {
+      "type": "single",
+      "resource": "entity/villager/villager"
+    },
+    {
+      "type": "single",
+      "resource": "entity/zombie/zombie"
+    },
+    {
+      "type": "single",
+      "resource": "entity/zombie_villager/zombie_villager"
+    },
+    {
+      "type": "single",
+      "resource": "entity/zombie_villager/type/plains"
+    },
+    {
+      "type": "single",
+      "resource": "entity/iron_golem/iron_golem"
+    },
+    {
+      "type": "single",
+      "resource": "entity/bed/red"
+    }
+  ]
+}
