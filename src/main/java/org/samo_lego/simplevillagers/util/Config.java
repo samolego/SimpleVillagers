@@ -6,18 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import org.samo_lego.config2brigadier.IBrigadierConfigurator;
 import org.samo_lego.config2brigadier.annotation.BrigadierDescription;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-import static org.samo_lego.simplevillagers.SimpleVillagers.LOGGER;
-import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
-import static org.samo_lego.simplevillagers.SimpleVillagers.getConfigFile;
+import static org.samo_lego.simplevillagers.SimpleVillagers.*;
 
 public class Config implements IBrigadierConfigurator {
     private static final Gson GSON;
@@ -44,10 +36,10 @@ public class Config implements IBrigadierConfigurator {
 
 
     @SerializedName("// Age of new baby villagers. Default is 20 minutes to grow up (like in vanilla).")
-    public final String _comment_babyAge = "";
+    public final String _comment_bornBabyAge = "";
     @BrigadierDescription(defaultOption = "-24000")
-    @SerializedName("baby_age")
-    public int babyAge = -24000;
+    @SerializedName("born_baby_age")
+    public int bornBabyAge = -24000;
 
     @SerializedName("// How much should age be increased by each tick in *incubator* block. Vanilla would be 1.")
     public final String _comment_babyAgeIncrease = "";
@@ -60,9 +52,9 @@ public class Config implements IBrigadierConfigurator {
 
     public static class Converter {
         @SerializedName("// How many ticks does zombie -> villager conversion take.")
-        public final String _comment_time = "";
+        public final String _comment_conversionTime = "";
         @SerializedName("time")
-        public int time = 6000;
+        public int conversionTime = 6000;
 
         @SerializedName("// Whether players must be online when conversion finishes to get discounts.")
         public final String _comment_requiresOnlinePlayer0 = "";

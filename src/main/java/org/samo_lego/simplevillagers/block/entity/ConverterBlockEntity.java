@@ -61,7 +61,7 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
             }
 
             this.converting = true;
-        } else if (this.converting && this.tickCount % CONFIG.converter.time == 0) {
+        } else if (this.converting && this.tickCount % CONFIG.converter.conversionTime == 0) {
             // Conversion has ended
             Villager villager = new Villager(EntityType.VILLAGER, this.level);
             // Loading in the villager data

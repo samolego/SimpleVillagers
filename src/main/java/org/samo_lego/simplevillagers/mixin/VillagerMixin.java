@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class VillagerMixin extends AbstractVillager implements VillagerUtil {
 
     @Unique
-    private boolean force = false;
+    private boolean forceDefaultTradingScreen = false;
 
     public VillagerMixin(EntityType<? extends AbstractVillager> entityType, Level level) {
         super(entityType, level);
@@ -27,7 +27,7 @@ public abstract class VillagerMixin extends AbstractVillager implements Villager
 
     @Override
     public void forceDefaultTradingScreen(boolean force) {
-        this.force = force;
+        this.forceDefaultTradingScreen = force;
     }
 
     @Inject(method = "startTrading",
@@ -38,11 +38,11 @@ public abstract class VillagerMixin extends AbstractVillager implements Villager
         if (player instanceof ServerPlayer pl &&
                 this.getVillagerXp() == 0 &&
                 Permissions.check(pl, "simplevillagers.reroll_buttons", true) &&
-                !this.force) {
+                !this.forceDefaultTradingScreen) {
             new RefreshingTradeGui(pl, (Villager) (Object) this).open();
             ci.cancel();
         } else {
-            this.force = false;
+            this.forceDefaultTradingScreen = false;
         }
     }
 }

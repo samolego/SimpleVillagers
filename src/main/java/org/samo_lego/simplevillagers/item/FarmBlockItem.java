@@ -11,6 +11,9 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.samo_lego.simplevillagers.network.NetworkHandler.isVanilla;
 
+/**
+ * Item for the basic (abstract) farm block.
+ */
 public class FarmBlockItem extends PolymerBlockItem implements PolymerClientDecoded, PolymerKeepModel {
     public FarmBlockItem(Block block, Properties settings, Item virtualItem) {
         super(block, settings, virtualItem);
