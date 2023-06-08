@@ -63,7 +63,9 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
             this.produceIron();
             this.hasGolem = false;
         } else if (this.canOperate() && this.tickCount % 10 == 0 && this.tickCount >= CONFIG.golemTimer - CONFIG.golemDyingTicks && this.hasStorageSpace) {  // 4800 - 240 = 4560
-            this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (CONFIG.sounds.playGolemHurt) {
+                this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.BLOCKS, 0.05F, 1.0F);
+            }
 
             if (!this.hasGolem) {
                 ((ServerLevel) this.level).sendParticles(ParticleTypes.FLAME, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 5, 0, 0, 0, 0.1);
@@ -99,7 +101,9 @@ public class IronFarmBlockEntity extends AbstractFarmBlockEntity {
                     itemStack.grow(stack.getCount());
                 }
 
-                this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_DEATH, SoundSource.BLOCKS, 1.0F, 1.0F);
+                if (CONFIG.sounds.playGolemDeath) {
+                    this.level.playSound(null, this.getBlockPos(), SoundEvents.IRON_GOLEM_DEATH, SoundSource.BLOCKS, 0.05F, 1.0F);
+                }
                 this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(HAS_GOLEM, false));
 
                 // Spawn particles

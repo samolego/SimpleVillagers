@@ -52,7 +52,9 @@ public class ConverterBlockEntity extends AbstractFarmBlockEntity {
         if (this.canOperate() && !this.converting) {
             this.tickCount = 0;
 
-            this.level.playSound(null, this.getBlockPos(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.HOSTILE, 1.0F, 1.0F);
+            if (CONFIG.sounds.playVillagerCure) {
+                this.level.playSound(null, this.getBlockPos(), SoundEvents.ZOMBIE_VILLAGER_CURE, SoundSource.HOSTILE, 1.0F, 1.0F);
+            }
             ((ServerLevel) this.level).sendParticles(ParticleTypes.ANGRY_VILLAGER, this.getBlockPos().getX() + 0.5, this.getBlockPos().getY() + 0.5, this.getBlockPos().getZ() + 0.5, 1, 0, 0, 0, 0.1);
 
             // Clear items

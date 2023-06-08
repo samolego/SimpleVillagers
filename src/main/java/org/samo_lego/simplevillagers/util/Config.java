@@ -69,6 +69,23 @@ public class Config implements IBrigadierConfigurator {
         public boolean requireSplash = true;
     }
 
+    public Sounds sounds = new Sounds();
+
+    public static class Sounds {
+        @SerializedName("// Whether to play sounds when golem is hurt.")
+        public final String _comment_playGolemHurt = "";
+        @SerializedName("// Whether to play sounds when golem dies.")
+        public final String _comment_playGolemDeath = "";
+        @SerializedName("// Whether to play sounds when villager is cured.")
+        public final String _comment_playVillagerCure = "";
+        @SerializedName("play_golem_hurt")
+        public boolean playGolemHurt = true;
+        @SerializedName("play_golem_death")
+        public boolean playGolemDeath = true;
+        @SerializedName("play_villager_cure")
+        public boolean playVillagerCure = true;
+    }
+
     public Restock restock = new Restock();
 
     public static class Restock {
