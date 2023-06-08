@@ -28,10 +28,7 @@ import java.util.List;
 
 import static net.minecraft.world.entity.npc.Villager.BREEDING_FOOD_THRESHOLD;
 import static net.minecraft.world.entity.npc.Villager.FOOD_POINTS;
-import static org.samo_lego.simplevillagers.SimpleVillagers.BREEDER_BLOCK_ENTITY;
-import static org.samo_lego.simplevillagers.SimpleVillagers.CONFIG;
-import static org.samo_lego.simplevillagers.SimpleVillagers.MOD_ID;
-import static org.samo_lego.simplevillagers.SimpleVillagers.VILLAGER_ITEM;
+import static org.samo_lego.simplevillagers.SimpleVillagers.*;
 
 public class BreederBlockEntity extends AbstractFarmBlockEntity {
     public static final ResourceLocation ID = new ResourceLocation(MOD_ID, "breeder_block_entity");
@@ -72,7 +69,7 @@ public class BreederBlockEntity extends AbstractFarmBlockEntity {
                     // Create baby villager item stack
                     final ItemStack babyVillager = new ItemStack(VILLAGER_ITEM);
                     final CompoundTag babyTag = new CompoundTag();
-                    babyTag.putInt("Age", CONFIG.babyAge);
+                    babyTag.putInt("Age", CONFIG.bornBabyAge);
 
                     // "Baby" lore
                     final CompoundTag loreTag = new CompoundTag();
